@@ -1,0 +1,13 @@
+html, body{
+    font-family: 'Inter', sans-serif;
+}
+
+.button{
+    background-color: #57d8cd;
+    color: #ffff;
+}
+
+.deleteButton{
+    background-color: #B31312;
+    color: #ffff;
+}
