@@ -632,62 +632,62 @@ if (isset($_POST['SubButton'])) {
                 </label>
 
                 <label class="form-control" data-time="67" style="text-align:center;padding-left:10px;width:250px">
-                  <input type="checkbox" class="time-checkbox" name="c67" id="67" onclick="falldayx('67')" />
+                  <input type="checkbox" class="time-checkbox" name="c67" id="x67" onclick="falldayx('67')" />
                   6am - 7am
                 </label>
 
                 <label class="form-control" data-time="78" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" class="time-checkbox" name="c78" id="78" onclick="falldayx('78')" />
+                  <input type="checkbox" class="time-checkbox" name="c78" id="x78" onclick="falldayx('78')" />
                   7am - 8am
                 </label>
 
                 <label class="form-control" data-time="89" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" class="time-checkbox" name="c89" id="89" onclick="falldayx('89')" />
+                  <input type="checkbox" class="time-checkbox" name="c89" id="x89" onclick="falldayx('89')" />
                   8am - 9am
                 </label>
 
                 <label class="form-control" data-time="910" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" class="time-checkbox" name="c910" id="910" onclick="falldayx('910')" />
+                  <input type="checkbox" class="time-checkbox" name="c910" id="x910" onclick="falldayx('910')" />
                   9am - 10am
                 </label>
 
                 <label class="form-control" data-time="1011" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" class="time-checkbox" name="c1011" id="1011" onclick="falldayx('1011')" />
+                  <input type="checkbox" class="time-checkbox" name="c1011" id="x1011" onclick="falldayx('1011')" />
                   10am - 11am
                 </label>
 
                 <label class="form-control" data-time="1112" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" class="time-checkbox" name="c1112" id="1112" onclick="falldayx('1112')" />
+                  <input type="checkbox" class="time-checkbox" name="c1112" id="x1112" onclick="falldayx('1112')" />
                   11am - 12nn
                 </label>
 
                 <label class="form-control" data-time="121" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" class="time-checkbox" name="c121" id="121" onclick="falldayx('121')" />
+                  <input type="checkbox" class="time-checkbox" name="c121" id="x121" onclick="falldayx('121')" />
                   12nn - 1pm
                 </label>
 
                 <label class="form-control" data-time="12" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" class="time-checkbox" name="c12" id="12" onclick="falldayx('12')" />
+                  <input type="checkbox" class="time-checkbox" name="c12" id="x12" onclick="falldayx('12')" />
                   1pm - 2pm
                 </label>
 
                 <label class="form-control" data-time="23" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" class="time-checkbox" name="c23" id="23" onclick="falldayx('23')" />
+                  <input type="checkbox" class="time-checkbox" name="c23" id="x23" onclick="falldayx('23')" />
                   2pm - 3pm
                 </label>
 
                 <label class="form-control" data-time="34" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" class="time-checkbox" name="c34" id="34" onclick="falldayx('34')" />
+                  <input type="checkbox" class="time-checkbox" name="c34" id="x34" onclick="falldayx('34')" />
                   3pm - 4pm
                 </label>
 
                 <label class="form-control" data-time="45" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" class="time-checkbox" name="c45" id="45" onclick="falldayx('45')" />
+                  <input type="checkbox" class="time-checkbox" name="c45" id="x45" onclick="falldayx('45')" />
                   4pm - 5pm
                 </label>
 
-                <label class="form-control" class="time-checkbox" data-time="56" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c56" id="56" onclick="falldayx('56')" />
+                <label class="form-control"  data-time="56" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c56" id="x56" onclick="falldayx('56')" />
                   5pm - 6pm
                 </label>
 
@@ -1112,36 +1112,39 @@ if (isset($_POST['SubButton'])) {
 
 
   function fallday() {
-    var x = document.getElementById("allday");
-    if (x.checked == 1) {
-      document.getElementById("67").checked = true;
-      document.getElementById("78").checked = true;
-      document.getElementById("89").checked = true;
-      document.getElementById("910").checked = true;
-      document.getElementById("1011").checked = true;
-      document.getElementById("1112").checked = true;
-      document.getElementById("121").checked = true;
-      document.getElementById("12").checked = true;
-      document.getElementById("23").checked = true;
-      document.getElementById("34").checked = true;
-      document.getElementById("45").checked = true;
-      document.getElementById("56").checked = true;
-    } else {
-      document.getElementById("67").checked = false;
-      document.getElementById("78").checked = false;
-      document.getElementById("89").checked = false;
-      document.getElementById("910").checked = false;
-      document.getElementById("1011").checked = false;
-      document.getElementById("1112").checked = false;
-      document.getElementById("121").checked = false;
-      document.getElementById("12").checked = false;
-      document.getElementById("23").checked = false;
-      document.getElementById("34").checked = false;
-      document.getElementById("45").checked = false;
-      document.getElementById("56").checked = false;
-    }
+  var x = document.getElementById("allday");
+  var checkboxes = [
+    document.getElementById("x67"),
+    document.getElementById("x78"),
+    document.getElementById("x89"),
+    document.getElementById("x910"),
+    document.getElementById("x1011"),
+    document.getElementById("x1112"),
+    document.getElementById("x121"),
+    document.getElementById("x12"),
+    document.getElementById("x23"),
+    document.getElementById("x34"),
+    document.getElementById("x45"),
+    document.getElementById("x56"),
+  ];
 
+  // Check if any checkbox is disabled
+  var anyDisabled = checkboxes.some(function(checkbox) {
+    return checkbox.disabled;
+  });
+
+  if (anyDisabled) {
+    x.checked = false; // Uncheck "All day" if any checkbox is disabled
+  } else if (x.checked && !anyDisabled) {
+    checkboxes.forEach(function(checkbox) {
+      checkbox.checked = true;
+    });
+  } else {
+    checkboxes.forEach(function(checkbox) {
+      checkbox.checked = false;
+    });
   }
+}
 
 
   function falldayx1() {
@@ -1151,61 +1154,46 @@ if (isset($_POST['SubButton'])) {
 
 
 
+// Get references to all time slot checkboxes
+var checkboxes = [
+  document.getElementById("x67"),
+  document.getElementById("x78"),
+  document.getElementById("x89"),
+  document.getElementById("x910"),
+  document.getElementById("x1011"),
+  document.getElementById("x1112"),
+  document.getElementById("x121"),
+  document.getElementById("x12"),
+  document.getElementById("x23"),
+  document.getElementById("x34"),
+  document.getElementById("x45"),
+  document.getElementById("x56"),
+];
 
-  // function falldayx(timeSlot) {
-  //   var x67 = document.getElementById("67");
-  //   var x78 = document.getElementById("78");
-  //   var x89 = document.getElementById("89");
-  //   var x910 = document.getElementById("910");
-  //   var x1011 = document.getElementById("1011");
-  //   var x1112 = document.getElementById("1112");
-  //   var x121 = document.getElementById("121");
-  //   var x12 = document.getElementById("12");
-  //   var x23 = document.getElementById("23");
-  //   var x34 = document.getElementById("34");
-  //   var x45 = document.getElementById("45");
-  //   var x56 = document.getElementById("56");
-
-
-
-  //   if (x67.checked == 1 && x78.checked == 1 && x89.checked == 1 && x910.checked == 1 && x1011.checked == 1 && x1112.checked == 1 && x121.checked == 1 && x12.checked == 1 && x23.checked == 1 && x34.checked == 1 && x45.checked == 1 && x56.checked == 1) {
-  //     document.getElementById("allday").checked = true;
-  //   } else {
-  //     document.getElementById("allday").checked = false;
-  //   }
-
-  // }
-
-  function falldayx(timeSlot) {
-    // Get references to all time slot checkboxes
-    var checkboxes = [
-      document.getElementById("67"),
-      document.getElementById("78"),
-      document.getElementById("89"),
-      document.getElementById("910"),
-      document.getElementById("1011"),
-      document.getElementById("1112"),
-      document.getElementById("121"),
-      document.getElementById("12"),
-      document.getElementById("23"),
-      document.getElementById("34"),
-      document.getElementById("45"),
-      document.getElementById("56"),
-    ];
-
-    // Determine if all time slot checkboxes are checked and enabled
-    var allChecked = checkboxes.every(function(checkbox) {
-      return checkbox.checked && !checkbox.disabled;
+// Add an event listener to each checkbox
+checkboxes.forEach(function(checkbox) {
+  checkbox.addEventListener("click", function() {
+    // Check if any checkbox is disabled
+    var anyDisabled = checkboxes.some(function(checkbox) {
+      return checkbox.disabled;
     });
 
-    // Update the "All day" checkbox based on the result
-    document.getElementById("allday").checked = allChecked;
-    return checkboxes;
-  }
+    // Update the "All day" checkbox based on whether any checkbox is disabled
+    document.getElementById("allday").checked = !anyDisabled;
+  });
+});
+
+function falldayx(timeSlot) {
+  // Your existing code for handling checkbox states
+}
 
 
 
   function checkRoomAvailability(str, checkbox) {
+    // Reset checkbox states (enable all checkboxes)
+    document.querySelectorAll('.time-checkbox').forEach((checkbox) => {
+      checkbox.disabled = false;
+    });
 
     // Get the selected date from the input field
     var selectedDate = str;
@@ -1215,7 +1203,6 @@ if (isset($_POST['SubButton'])) {
     // Debugging: Log the selectedDate to the console 
     console.log("Selected Date:", str);
     console.log("Selected Room:", roomName);
-    console.log("Selected Time Slot:", timeSlot);
     // console.log("Selected QTY:", quantity);
 
     // Send an AJAX request to the server to check availability
@@ -1229,49 +1216,49 @@ if (isset($_POST['SubButton'])) {
     // Declare the timeCheckboxes variable
     const timeCheckboxes = document.querySelectorAll('.time-checkbox');
 
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) { // Check readyState only once
-        if (xhr.status === 200) {
-          const response = JSON.parse(xhr.responseText);
-          console.log('Response:', response);
+   // ...
 
-          try {
-            if (response.available) {
-              image.style.backgroundColor = "green";
-              // Enable all time checkboxes
-              timeCheckboxes.forEach((checkbox) => {
-                checkbox.disabled = false;
-              });
-            } else {
-              image.style.backgroundColor = "yellow";
-              // Disable unavailable time checkboxes
-              response.unavailableTimes.forEach((timeSlot) => {
-                const checkbox = document.getElementById(timeSlot);
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === 4) { // Check readyState only once
+    if (xhr.status === 200) {
+      const response = JSON.parse(xhr.responseText);
+      console.log('Response:', response);
 
-                // Check if the checkbox element exists before disabling it
-                if (checkbox !== null) {
-                  checkbox.disabled = true;
-                  console.log(checkbox)
-                } else {
-                  console.log('Null');
-                }
-
-              });
-            }
-          } catch (error) {
-            console.error('Error parsing JSON response:', error);
-          }
+      try {
+        if (response.available) {
+          image.style.backgroundColor = "green";
+          // Enable all time checkboxes
+          timeCheckboxes.forEach((checkbox) => {
+            checkbox.disabled = false;
+          });
         } else {
-          // Handle the request error here
-          console.error('Request failed with status:', xhr.status);
+          image.style.backgroundColor = "yellow";
+          // Disable unavailable time checkboxes
+          response.unavailableTimes.forEach((timeSlot) => {
+            const checkbox = document.getElementById(timeSlot);
+            if (checkbox) {
+              checkbox.disabled = true;
+            } else {
+              console.log('Checkbox not found for time slot:', timeSlot);
+            }
+          });
         }
+      } catch (error) {
+        console.error('Error parsing JSON response:', error);
       }
-    };
+    } else {
+      // Handle the request error here
+      console.error('Request failed with status:', xhr.status);
+    }
+  }
+};
+
 
     // Send the request
     xhr.send(data);
     $('#myModalroom').modal('show');
   }
+
 
 
 

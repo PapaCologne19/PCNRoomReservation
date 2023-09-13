@@ -192,3 +192,17 @@ $results = $connect->query($query);
             }
         }
     }
+
+
+
+
+response.unavailableTimes.forEach((timeSlot) => {
+                const checkbox = document.getElementById(timeSlot);
+
+                // Check if the checkbox element exists before disabling it
+                if (checkbox !== null) {
+                  checkbox.disabled = true;
+                  console.log(checkbox)
+                } else {
+                  console.log('Null');
+                }
