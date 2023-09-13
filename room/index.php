@@ -270,7 +270,7 @@ if (isset($_POST['SubButton'])) {
     $row = mysqli_fetch_assoc($result);
     $existingDataCount = $row["existingDataCount"];
 
-    echo "Existing Data Count: $existingDataCount"; // Debugging line
+    // echo "Existing Data Count: $existingDataCount"; // Debugging line,
 
     if ($existingDataCount > 0) {
       // Data already exists for the specified date in one of the columns, do not insert
@@ -472,7 +472,7 @@ if (isset($_POST['SubButton'])) {
   <dialog id="calForm">
 
     <form method="dialog">
-      <div id="evtCX">X</div>
+      <div id="evtCX">&times;</div>
       <h2 class="evt100">CALENDAR EVENT</h2>
 
       <div class="evt50">
@@ -531,7 +531,7 @@ if (isset($_POST['SubButton'])) {
       </div>
 
       <div class="evt100">
-        <input type="text" id="evtID">
+        <input type="hidden" id="evtID">
         <input class="btn btn-danger" type="submit" id="evtDel" name="evtDel" value="Delete">
         <input class="btn btn-success" type="submit" id="evtSave" name="evtSave" value="Accept">
       </div>
@@ -592,8 +592,7 @@ if (isset($_POST['SubButton'])) {
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <!--<button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Result</h4>-->
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px" onclick="playAudio();$('#myModal1').modal('show');" data-dismiss="modal">
         </div>
         <div class="modal-body">
@@ -612,8 +611,8 @@ if (isset($_POST['SubButton'])) {
                   </div>
                   <br>
                   <br>
-                  <button type="button" class="btn btn-warning" id="selectingRoomButton" aria-label="Close" required> Select Room </button>
-                  <input type="text" name="roomko" id="roomko" class="form-control" onchange="checkRoomAvailability(this.value)" placeholder="Place of Meeting" style="height:45px;width:250px;" required readonly>
+                  <button type="button" class="btn btn-warning" id="selectingRoomButton" aria-label="Close" required> Selected Room </button>
+                  <input type="text" name="roomko" id="roomko" class="form-control" placeholder="Place of Meeting" style="height:45px;width:250px;" required readonly>
                   <input type="text" name="qty" id="qty" class="form-control" placeholder="Qty" style="height:45px;width:250px;" required>
               </center>
 
@@ -628,67 +627,67 @@ if (isset($_POST['SubButton'])) {
               <center>
 
                 <label class="form-control" style="text-align:center;width:300px">
-                  <input type="checkbox" name="c_allday" id="allday" onclick="fallday()" />
+                  <input type="checkbox" class="time-checkbox" name="c_allday" id="allday" onclick="fallday()" />
                   All day
                 </label>
 
-                <label class="form-control time-checkbox" data-time="67" style="text-align:center;padding-left:10px;width:250px">
-                  <input type="checkbox" name="c67" id="67" onclick="falldayx('67')" />
+                <label class="form-control" data-time="67" style="text-align:center;padding-left:10px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c67" id="67" onclick="falldayx('67')" />
                   6am - 7am
                 </label>
 
-                <label class="form-control time-checkbox" data-time="78" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c78" id="78" onclick="falldayx('78')" />
+                <label class="form-control" data-time="78" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c78" id="78" onclick="falldayx('78')" />
                   7am - 8am
                 </label>
 
-                <label class="form-control time-checkbox" data-time="89" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c89" id="89" onclick="falldayx()" />
+                <label class="form-control" data-time="89" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c89" id="89" onclick="falldayx('89')" />
                   8am - 9am
                 </label>
 
-                <label class="form-control time-checkbox" data-time="910" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c910" id="910" onclick="falldayx()" />
+                <label class="form-control" data-time="910" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c910" id="910" onclick="falldayx('910')" />
                   9am - 10am
                 </label>
 
-                <label class="form-control time-checkbox" data-time="1011" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c1011" id="1011" onclick="falldayx()" />
+                <label class="form-control" data-time="1011" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c1011" id="1011" onclick="falldayx('1011')" />
                   10am - 11am
                 </label>
 
-                <label class="form-control time-checkbox" data-time="1112" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c1112" id="1112" onclick="falldayx()" />
+                <label class="form-control" data-time="1112" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c1112" id="1112" onclick="falldayx('1112')" />
                   11am - 12nn
                 </label>
 
-                <label class="form-control time-checkbox" data-time="121" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c121" id="121" onclick="falldayx()" />
+                <label class="form-control" data-time="121" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c121" id="121" onclick="falldayx('121')" />
                   12nn - 1pm
                 </label>
 
-                <label class="form-control time-checkbox" data-time="12" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c12" id="12" onclick="falldayx()" />
+                <label class="form-control" data-time="12" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c12" id="12" onclick="falldayx('12')" />
                   1pm - 2pm
                 </label>
 
-                <label class="form-control time-checkbox" data-time="23" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c23" id="23" onclick="falldayx()" />
+                <label class="form-control" data-time="23" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c23" id="23" onclick="falldayx('23')" />
                   2pm - 3pm
                 </label>
 
-                <label class="form-control time-checkbox" data-time="34" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c34" id="34" onclick="falldayx()" />
+                <label class="form-control" data-time="34" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c34" id="34" onclick="falldayx('34')" />
                   3pm - 4pm
                 </label>
 
-                <label class="form-control time-checkbox" data-time="45" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c45" id="45" onclick="falldayx()" />
+                <label class="form-control" data-time="45" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" class="time-checkbox" name="c45" id="45" onclick="falldayx('45')" />
                   4pm - 5pm
                 </label>
 
-                <label class="form-control time-checkbox" data-time="56" style="text-align:center;margin-top:2px;width:250px">
-                  <input type="checkbox" name="c56" id="56" onclick="falldayx()" />
+                <label class="form-control" class="time-checkbox" data-time="56" style="text-align:center;margin-top:2px;width:250px">
+                  <input type="checkbox" name="c56" id="56" onclick="falldayx('56')" />
                   5pm - 6pm
                 </label>
 
@@ -938,46 +937,14 @@ if (isset($_POST['SubButton'])) {
 
         <!-- Modal for Room Selection (Place of Meeting) -->
         <div class="modal fade" id="myModalroom" role="dialog">
-
           <div class="modal-dialog modal-dialog-scrollable" style="width:95%;">
-
             <!-- Modal content-->
             <div class="modal-content">
-
               <div class="modal-header">
-
                 <button type="button" class="close" onclick="$('#myModalroom').modal('hide')">&times;</button>
-                <!-- <h4 class="modal-title">Result</h4>-->
                 <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px" onclick="playAudio();$('#myModalroom').modal('hide')">
-
               </div>
-
               <div class="modal-body2">
-                <?php
-                // $query = "SELECT * FROM rooms";
-                // $result = $connect->query($query);
-                // while ($row = $result->fetch_assoc()) {
-                ?>
-
-                <!-- <center>
-                    <center>
-                      <div class="demoWrapper">
-                        <div class="stage">
-                          <div class="box">
-                            <img src="images/<?php echo $row['image'] ?>" id="changeImageBackground" alt="logo" width="285" height="285" onclick="document.getElementById('qty').focus();document.getElementById('roomko').value='<?php echo $row['rooms']; ?>';$('#myModalroom').modal('hide');">
-                          </div>
-                          <p><?php echo $row['rooms'] ?></p>
-                        </div>
-                        <div class="stage">
-
-                        </div>
-                      </div>
-
-                      
-                    </center>
-                  </center> -->
-                <?php //} 
-                ?>
                 <center>
                   <?php
                   $query = "SELECT * FROM rooms";
@@ -1000,7 +967,6 @@ if (isset($_POST['SubButton'])) {
                       foreach ($imageUrls as $index => $imageUrl) {
                         echo '<figure style="--index:' . $index . '">'; ?>
                         <img src="images/<?php echo $imageUrl; ?>" id="changeImageBackground" alt="logo" width="285" height="285" onclick="document.getElementById('qty').focus();document.getElementById('roomko').value='<?php echo $roomName[$index]; ?>';$('#myModalroom').modal('hide');">
-
                       <?php
                         echo '<h1>' . $roomName[$index] . '</h1>';
                         echo '<h5>' . $descriptions[$index] . '</h5>';
@@ -1011,15 +977,12 @@ if (isset($_POST['SubButton'])) {
                   </div>
                   <button class="prev">&#10094</button>
                   <button class="next">&#10095</button>
-
                 </center>
-
-
-
               </div>
             </div>
           </div>
         </div>
+
 
 
 
@@ -1189,42 +1152,70 @@ if (isset($_POST['SubButton'])) {
 
 
 
+  // function falldayx(timeSlot) {
+  //   var x67 = document.getElementById("67");
+  //   var x78 = document.getElementById("78");
+  //   var x89 = document.getElementById("89");
+  //   var x910 = document.getElementById("910");
+  //   var x1011 = document.getElementById("1011");
+  //   var x1112 = document.getElementById("1112");
+  //   var x121 = document.getElementById("121");
+  //   var x12 = document.getElementById("12");
+  //   var x23 = document.getElementById("23");
+  //   var x34 = document.getElementById("34");
+  //   var x45 = document.getElementById("45");
+  //   var x56 = document.getElementById("56");
+
+
+
+  //   if (x67.checked == 1 && x78.checked == 1 && x89.checked == 1 && x910.checked == 1 && x1011.checked == 1 && x1112.checked == 1 && x121.checked == 1 && x12.checked == 1 && x23.checked == 1 && x34.checked == 1 && x45.checked == 1 && x56.checked == 1) {
+  //     document.getElementById("allday").checked = true;
+  //   } else {
+  //     document.getElementById("allday").checked = false;
+  //   }
+
+  // }
+
   function falldayx(timeSlot) {
-    var x67 = document.getElementById("67");
-    var x78 = document.getElementById("78");
-    var x89 = document.getElementById("89");
-    var x910 = document.getElementById("910");
-    var x1011 = document.getElementById("1011");
-    var x1112 = document.getElementById("1112");
-    var x121 = document.getElementById("121");
-    var x12 = document.getElementById("12");
-    var x23 = document.getElementById("23");
-    var x34 = document.getElementById("34");
-    var x45 = document.getElementById("45");
-    var x56 = document.getElementById("56");
+    // Get references to all time slot checkboxes
+    var checkboxes = [
+      document.getElementById("67"),
+      document.getElementById("78"),
+      document.getElementById("89"),
+      document.getElementById("910"),
+      document.getElementById("1011"),
+      document.getElementById("1112"),
+      document.getElementById("121"),
+      document.getElementById("12"),
+      document.getElementById("23"),
+      document.getElementById("34"),
+      document.getElementById("45"),
+      document.getElementById("56"),
+    ];
 
+    // Determine if all time slot checkboxes are checked and enabled
+    var allChecked = checkboxes.every(function(checkbox) {
+      return checkbox.checked && !checkbox.disabled;
+    });
 
-
-    if (x67.checked == 1 && x78.checked == 1 && x89.checked == 1 && x910.checked == 1 && x1011.checked == 1 && x1112.checked == 1 && x121.checked == 1 && x12.checked == 1 && x23.checked == 1 && x34.checked == 1 && x45.checked == 1 && x56.checked == 1) {
-      document.getElementById("allday").checked = true;
-    } else {
-      document.getElementById("allday").checked = false;
-    }
-
+    // Update the "All day" checkbox based on the result
+    document.getElementById("allday").checked = allChecked;
+    return checkboxes;
   }
 
 
 
-  function checkRoomAvailability(str) {
+  function checkRoomAvailability(str, checkbox) {
 
     // Get the selected date from the input field
     var selectedDate = str;
     var roomName = document.getElementById("roomko").value;
     var image = document.getElementById("changeImageBackground");
-
-    // Debugging: Log the selectedDate to the console
+    const timeSlot = falldayx();
+    // Debugging: Log the selectedDate to the console 
     console.log("Selected Date:", str);
     console.log("Selected Room:", roomName);
+    console.log("Selected Time Slot:", timeSlot);
     // console.log("Selected QTY:", quantity);
 
     // Send an AJAX request to the server to check availability
@@ -1235,28 +1226,47 @@ if (isset($_POST['SubButton'])) {
     // Define the data to be sent in the request
     const data = `roomName=${roomName}&selectedDate=${selectedDate}`;
 
+    // Declare the timeCheckboxes variable
+    const timeCheckboxes = document.querySelectorAll('.time-checkbox');
+
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4) { // Check readyState only once
         if (xhr.status === 200) {
           const response = JSON.parse(xhr.responseText);
+          console.log('Response:', response);
 
           try {
             if (response.available) {
               image.style.backgroundColor = "green";
+              // Enable all time checkboxes
+              timeCheckboxes.forEach((checkbox) => {
+                checkbox.disabled = false;
+              });
             } else {
               image.style.backgroundColor = "yellow";
+              // Disable unavailable time checkboxes
+              response.unavailableTimes.forEach((timeSlot) => {
+                const checkbox = document.getElementById(timeSlot);
+
+                // Check if the checkbox element exists before disabling it
+                if (checkbox !== null) {
+                  checkbox.disabled = true;
+                  console.log(checkbox)
+                } else {
+                  console.log('Null');
+                }
+
+              });
             }
           } catch (error) {
             console.error('Error parsing JSON response:', error);
           }
-
         } else {
           // Handle the request error here
           console.error('Request failed with status:', xhr.status);
         }
       }
     };
-
 
     // Send the request
     xhr.send(data);
@@ -1273,18 +1283,32 @@ if (isset($_POST['SubButton'])) {
   const imgs = document.querySelectorAll(".slides img");
 
   document.querySelector(".next").addEventListener("click", () => {
+    // Remove the 'selected-image' class from the previously selected image
+    imgs[index].classList.remove("selected-image");
+
     index++;
     if (index >= slidesCount) {
       index = 0;
     }
+
+    // Add the 'selected-image' class to the current image
+    imgs[index].classList.add("selected-image");
+
     move();
   });
 
   document.querySelector(".prev").addEventListener("click", () => {
+    // Remove the 'selected-image' class from the previously selected image
+    imgs[index].classList.remove("selected-image");
+
     index--;
     if (index < 0) {
       index = slidesCount - 1;
     }
+
+    // Add the 'selected-image' class to the current image
+    imgs[index].classList.add("selected-image");
+
     move();
   });
 
@@ -1297,6 +1321,8 @@ if (isset($_POST['SubButton'])) {
   // Initialize the slider when the DOM is ready
   document.addEventListener("DOMContentLoaded", function() {
     move(); // Initialize the slider at the first image
+    // Add 'selected-image' class to the initial image
+    imgs[index].classList.add("selected-image");
   });
 </script>
 
