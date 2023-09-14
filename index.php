@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="bootstrap/bootstrap/css/bootstrap.min.css">
     <script src="bootstrap/bootstrap/js/bootstrap.js"></script>
     <script src="bootstrap/bootstrap/js/bootstrap.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
     <title>Login</title>
 </head>
@@ -16,10 +21,11 @@
 <body>
     <center>
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="panel panel-login">
                         <div class="panel-heading">
+                            <img src="room/images/pcn.png" alt="PCN LOGO" class="img-responsive" width="15%">
                             <div class="panel-title text-center">Login</div>
                             <hr>
                         </div>
@@ -29,12 +35,12 @@
                                     <form id="login-form" class="col-lg-offset-1 col-lg-10" action="" method="post" role="form" style="display: block;">
                                         <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                            <input type="text" name="username" id="username" tabindex="1" class="form-control" required placeholder=" ">
+                                            <input type="text" name="username" id="username" tabindex="1" class="form-control" required>
                                             <label class="form-control-placeholder" for="username">Username</label>
                                         </div>
                                         <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                            <input type="password" name="password" id="password" tabindex="2" class="form-control" required placeholder=" ">
+                                            <input type="password" name="password" id="password" tabindex="2" class="form-control" required>
                                             <label class="form-control-placeholder" for="password">Password</label>
                                         </div>
                                         <div class="col-sm-6 col-sm-offset-3">

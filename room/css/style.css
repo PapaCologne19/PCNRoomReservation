@@ -90,11 +90,23 @@ input[type="checkbox"]:focus {
 
 input[type="checkbox"]:disabled {
   --form-control-color: var(--form-control-disabled);
-
   color: var(--form-control-disabled);
   cursor: not-allowed;
 }
 
+input[type="checkbox"]:disabled::after {
+  content: "X";
+  color: red;
+  display: inline-block;
+  width: 20px; /* Adjust the size as needed */
+  height: 20px; /* Adjust the size as needed */
+  text-align: center;
+  vertical-align: middle;
+  background-color: #ccc; /* Background color for the "X" mark */
+  border: 1px solid #999; /* Border for the container */
+  border-radius: 4px; /* Rounded corners for the container */
+  margin-top: -7px;
+}
 
 
 /* Float four columns side by side */
@@ -306,4 +318,19 @@ input[type="date"]{
 
 .selected-image {
   border: dodgerblue 6px solid ; 
+}
+
+/* Style the checkbox label (pseudo-element) */
+.time-checkbox:disabled + label::before {
+  content: "X" !important;
+  color: red !important;
+  font-weight: bold !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  text-align: center !important;
+  line-height: 20px !important; /* Adjust this value as needed to center the 'X' vertically */
+  background-color: rgba(255, 0, 0, 0.5) !important; /* Red background with some opacity */
 }

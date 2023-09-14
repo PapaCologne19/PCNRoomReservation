@@ -364,16 +364,13 @@ if (isset($_POST['SubButton'])) {
   <title>Calendar</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-  <link rel="icon" type="image/png" href="favicon.png">
 
   <!-- ANDROID + CHROME + APPLE + WINDOWS APP -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="white">
-  <!--<link rel="apple-touch-icon" href="icon-512.png">-->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Calendar">
-  <!--<meta name="msapplication-TileImage" content="icon-512.png">-->
   <meta name="msapplication-TileColor" content="#ffffff">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -399,7 +396,6 @@ if (isset($_POST['SubButton'])) {
   <script src="4b-calendar.js"></script>
   <link rel="stylesheet" href="css/4c-calendar.css">
   <link rel="stylesheet" href="css/style.css">
-
 
 
   <!-- Sweet alert -->
@@ -601,20 +597,26 @@ if (isset($_POST['SubButton'])) {
         <div class="row">
           <div class="column">
             <div class="card">
-              <h3>Select Date</h3>
 
               <center>
                 <form action="" method="POST">
                   <div class="evt50">
                     <br>
-                    <input id="evtStart" name="evtStart" type="date" onchange="checkRoomAvailability(this.value)" required>
+                    <label for="" class="form-label">Select Date</label>
+                    <br>
+                    <input id="evtStarts" name="evtStart" type="date" required>
+
                   </div>
-                  <br>
-                  <br>
-                  <button type="button" class="btn btn-warning" id="selectingRoomButton" aria-label="Close" required> Selected Room </button>
+                  <label for="">Select Room</label>
+                  <button type="button" class="btn btn-warning" id="selectingRoomButton" onclick="$('#myModalroom').modal('show');" aria-label="Close" required> Please select </button>
                   <input type="text" name="roomko" id="roomko" class="form-control" placeholder="Place of Meeting" style="height:45px;width:250px;" required readonly>
-                  <input type="text" name="qty" id="qty" class="form-control" placeholder="Qty" style="height:45px;width:250px;" required>
+                  <p id="result"></p>
+                  <br>
+                  <br>
+                  <input type="number" name="qty" id="qty" class="form-control" placeholder="Qty" style="height:45px;width:250px;" required>
+
               </center>
+
 
             </div>
           </div>
@@ -686,7 +688,7 @@ if (isset($_POST['SubButton'])) {
                   4pm - 5pm
                 </label>
 
-                <label class="form-control"  data-time="56" style="text-align:center;margin-top:2px;width:250px">
+                <label class="form-control" data-time="56" style="text-align:center;margin-top:2px;width:250px">
                   <input type="checkbox" class="time-checkbox" name="c56" id="x56" onclick="falldayx('56')" />
                   5pm - 6pm
                 </label>
@@ -945,6 +947,7 @@ if (isset($_POST['SubButton'])) {
                 <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px" onclick="playAudio();$('#myModalroom').modal('hide')">
               </div>
               <div class="modal-body2">
+
                 <center>
                   <?php
                   $query = "SELECT * FROM rooms";
@@ -963,16 +966,17 @@ if (isset($_POST['SubButton'])) {
                   <div class="slider-container">
                     <div class="slides">
                       <?php
-                      // Loop through the image URLs and generate <figure> elements
+                      // Loop through the image URLs and generate <figure> elementsonclick="checkRoomAvailability(this.value)"
                       foreach ($imageUrls as $index => $imageUrl) {
                         echo '<figure style="--index:' . $index . '">'; ?>
-                        <img src="images/<?php echo $imageUrl; ?>" id="changeImageBackground" alt="logo" width="285" height="285" onclick="document.getElementById('qty').focus();document.getElementById('roomko').value='<?php echo $roomName[$index]; ?>';$('#myModalroom').modal('hide');">
+                        <img src="images/<?php echo $imageUrl; ?>" id="changeImageBackground" alt="logo" width="285" height="285" onclick="selectRoom('<?php echo $roomName[$index]; ?>');">
                       <?php
                         echo '<h1>' . $roomName[$index] . '</h1>';
                         echo '<h5>' . $descriptions[$index] . '</h5>';
                         echo '</figure>';
                       }
                       ?>
+
                     </div>
                   </div>
                   <button class="prev">&#10094</button>
@@ -1112,7 +1116,49 @@ if (isset($_POST['SubButton'])) {
 
 
   function fallday() {
-  var x = document.getElementById("allday");
+    var x = document.getElementById("allday");
+    var checkboxes = [
+      document.getElementById("x67"),
+      document.getElementById("x78"),
+      document.getElementById("x89"),
+      document.getElementById("x910"),
+      document.getElementById("x1011"),
+      document.getElementById("x1112"),
+      document.getElementById("x121"),
+      document.getElementById("x12"),
+      document.getElementById("x23"),
+      document.getElementById("x34"),
+      document.getElementById("x45"),
+      document.getElementById("x56"),
+    ];
+
+    // Check if any checkbox is disabled
+    var anyDisabled = checkboxes.some(function(checkbox) {
+      return checkbox.disabled;
+    });
+
+    if (anyDisabled) {
+      x.checked = false; // Uncheck "All day" if any checkbox is disabled
+    } else if (x.checked && !anyDisabled) {
+      checkboxes.forEach(function(checkbox) {
+        checkbox.checked = true;
+      });
+    } else {
+      checkboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+      });
+    }
+  }
+
+
+  function falldayx1() {
+
+    document.getElementById("allday").checked = false;
+  }
+
+
+
+  // Get references to all time slot checkboxes
   var checkboxes = [
     document.getElementById("x67"),
     document.getElementById("x78"),
@@ -1128,81 +1174,53 @@ if (isset($_POST['SubButton'])) {
     document.getElementById("x56"),
   ];
 
-  // Check if any checkbox is disabled
-  var anyDisabled = checkboxes.some(function(checkbox) {
-    return checkbox.disabled;
+  // Add an event listener to each checkbox
+  checkboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("click", function() {
+      // Check if any checkbox is disabled
+      var anyDisabled = checkboxes.some(function(checkbox) {
+        return checkbox.disabled;
+      });
+
+      // Update the "All day" checkbox based on whether any checkbox is disabled
+      document.getElementById("allday").checked = !anyDisabled;
+    });
   });
 
-  if (anyDisabled) {
-    x.checked = false; // Uncheck "All day" if any checkbox is disabled
-  } else if (x.checked && !anyDisabled) {
-    checkboxes.forEach(function(checkbox) {
-      checkbox.checked = true;
-    });
-  } else {
-    checkboxes.forEach(function(checkbox) {
-      checkbox.checked = false;
-    });
-  }
-}
 
-
-  function falldayx1() {
-
-    document.getElementById("allday").checked = false;
+  function falldayx(timeSlot) {
+    // Your existing code for handling checkbox states
   }
 
 
 
-// Get references to all time slot checkboxes
-var checkboxes = [
-  document.getElementById("x67"),
-  document.getElementById("x78"),
-  document.getElementById("x89"),
-  document.getElementById("x910"),
-  document.getElementById("x1011"),
-  document.getElementById("x1112"),
-  document.getElementById("x121"),
-  document.getElementById("x12"),
-  document.getElementById("x23"),
-  document.getElementById("x34"),
-  document.getElementById("x45"),
-  document.getElementById("x56"),
-];
-
-// Add an event listener to each checkbox
-checkboxes.forEach(function(checkbox) {
-  checkbox.addEventListener("click", function() {
-    // Check if any checkbox is disabled
-    var anyDisabled = checkboxes.some(function(checkbox) {
-      return checkbox.disabled;
-    });
-
-    // Update the "All day" checkbox based on whether any checkbox is disabled
-    document.getElementById("allday").checked = !anyDisabled;
-  });
-});
-
-function falldayx(timeSlot) {
-  // Your existing code for handling checkbox states
-}
 
 
+  var selectedDate; // Global variable for selected date
+  var selectedRoom; // Global variable for selected room
 
-  function checkRoomAvailability(str, checkbox) {
+  function selectRoom(roomName) {
+    selectedDate = document.getElementById('evtStarts').value;
+    selectedRoom = roomName;
+    document.getElementById('roomko').value = roomName;
+    $('#myModalroom').modal('hide');
+    checkRoomAvailability(); // Call checkRoomAvailability here
+  }
+
+
+  function checkRoomAvailability() {
     // Reset checkbox states (enable all checkboxes)
     document.querySelectorAll('.time-checkbox').forEach((checkbox) => {
       checkbox.disabled = false;
     });
 
-    // Get the selected date from the input field
-    var selectedDate = str;
-    var roomName = document.getElementById("roomko").value;
+    // Log the selected date and room name
+    console.log("Selected Room:", selectedRoom);
+    console.log("Selected Date:", selectedDate);
+
+    // Rest of your code...
     var image = document.getElementById("changeImageBackground");
     const timeSlot = falldayx();
-    // Debugging: Log the selectedDate to the console 
-    console.log("Selected Date:", str);
-    console.log("Selected Room:", roomName);
     // console.log("Selected QTY:", quantity);
 
     // Send an AJAX request to the server to check availability
@@ -1211,56 +1229,51 @@ function falldayx(timeSlot) {
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
     // Define the data to be sent in the request
-    const data = `roomName=${roomName}&selectedDate=${selectedDate}`;
+    const data = `roomName=${selectedRoom}&selectedDate=${selectedDate}`;
 
     // Declare the timeCheckboxes variable
     const timeCheckboxes = document.querySelectorAll('.time-checkbox');
 
-   // ...
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) { // Check readyState only once
+        if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          console.log('Response:', response);
 
-xhr.onreadystatechange = function() {
-  if (xhr.readyState === 4) { // Check readyState only once
-    if (xhr.status === 200) {
-      const response = JSON.parse(xhr.responseText);
-      console.log('Response:', response);
-
-      try {
-        if (response.available) {
-          image.style.backgroundColor = "green";
-          // Enable all time checkboxes
-          timeCheckboxes.forEach((checkbox) => {
-            checkbox.disabled = false;
-          });
-        } else {
-          image.style.backgroundColor = "yellow";
-          // Disable unavailable time checkboxes
-          response.unavailableTimes.forEach((timeSlot) => {
-            const checkbox = document.getElementById(timeSlot);
-            if (checkbox) {
-              checkbox.disabled = true;
+          try {
+            if (response.available) {
+              image.style.backgroundColor = "green";
+              // Enable all time checkboxes
+              timeCheckboxes.forEach((checkbox) => {
+                checkbox.disabled = false;
+              });
             } else {
-              console.log('Checkbox not found for time slot:', timeSlot);
+              image.style.backgroundColor = "yellow";
+              // Disable unavailable time checkboxes
+              response.unavailableTimes.forEach((timeSlot) => {
+                const checkbox = document.getElementById(timeSlot);
+                if (checkbox) {
+                  checkbox.disabled = true;
+                  checkbox.classList.add("disabled-checkbox");
+                } else {
+                  console.log('Checkbox not found for time slot:', timeSlot);
+                }
+              });
             }
-          });
+          } catch (error) {
+            console.error('Error parsing JSON response:', error);
+          }
+        } else {
+          // Handle the request error here
+          console.error('Request failed with status:', xhr.status);
         }
-      } catch (error) {
-        console.error('Error parsing JSON response:', error);
       }
-    } else {
-      // Handle the request error here
-      console.error('Request failed with status:', xhr.status);
-    }
-  }
-};
+    };
 
 
     // Send the request
     xhr.send(data);
-    $('#myModalroom').modal('show');
   }
-
-
-
 
   // For Image sliding
   const slides = document.querySelector(".slides");

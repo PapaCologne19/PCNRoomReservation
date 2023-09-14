@@ -6,9 +6,7 @@ self.addEventListener("install", evt => {
     .then(cache => cache.addAll([
       "4b-calendar.js",
       "4c-calendar.css",
-      "5-manifest.json",
-      "favicon.png",
-      "icon-512.png"
+      "5-manifest.json"
     ]))
     .catch(err => console.error(err))
   );
