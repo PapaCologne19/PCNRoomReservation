@@ -447,7 +447,7 @@ if (isset($_POST['SubButton'])) {
       <input id="calYear" type="number" value="<?= $yearNow ?>">
       <input id="calNext" type="button" class="mi" value="&gt;">
     </div>
-    <input class="btn" id="calAdd" type="button" value="+">&nbsp;
+    <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
     <button type="button" class="gbutton btn btn-primary" data-toggle="modal" data-target="#myModal" style="float:right">Add Appointment</button> &nbsp;
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right">Add Room</button>
 
@@ -604,7 +604,7 @@ if (isset($_POST['SubButton'])) {
                     <br>
                     <label for="" class="form-label">Select Date</label>
                     <br>
-                    <input id="evtStarts" name="evtStart" type="date" required>
+                    <input id="evtStarts" name="evtStart" type="date" onchange="checkRoom()" required>
 
                   </div>
                   <label for="">Select Room</label>
@@ -1137,11 +1137,13 @@ if (isset($_POST['SubButton'])) {
       return checkbox.disabled;
     });
 
+
     if (anyDisabled) {
       x.checked = false; // Uncheck "All day" if any checkbox is disabled
     } else if (x.checked && !anyDisabled) {
       checkboxes.forEach(function(checkbox) {
         checkbox.checked = true;
+
       });
     } else {
       checkboxes.forEach(function(checkbox) {
@@ -1209,71 +1211,120 @@ if (isset($_POST['SubButton'])) {
 
 
   function checkRoomAvailability() {
-    // Reset checkbox states (enable all checkboxes)
-    document.querySelectorAll('.time-checkbox').forEach((checkbox) => {
-      checkbox.disabled = false;
-    });
+  // Reset checkbox states (enable all checkboxes)
+  document.querySelectorAll('.time-checkbox').forEach((checkbox) => {
+    checkbox.disabled = false;
+  });
 
-    // Log the selected date and room name
-    console.log("Selected Room:", selectedRoom);
-    console.log("Selected Date:", selectedDate);
+  // Rest of your code...
+  const image = document.getElementById("changeImageBackground");
+  const timeCheckboxes = document.querySelectorAll('.time-checkbox');
 
-    // Rest of your code...
-    var image = document.getElementById("changeImageBackground");
-    const timeSlot = falldayx();
-    // console.log("Selected QTY:", quantity);
+  console.log('Selected:', selectedDate);
+  console.log('Selected:', selectedRoom);
 
-    // Send an AJAX request to the server to check availability
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "check_availability.php", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  // Send an AJAX request to the server to check availability
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "check_availability.php", true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    // Define the data to be sent in the request
-    const data = `roomName=${selectedRoom}&selectedDate=${selectedDate}`;
+  // Define the data to be sent in the request
+  const data = `roomName=${selectedRoom}&selectedDate=${selectedDate}`;
 
-    // Declare the timeCheckboxes variable
-    const timeCheckboxes = document.querySelectorAll('.time-checkbox');
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) { // Check readyState only once
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log('Response:', response);
 
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) { // Check readyState only once
-        if (xhr.status === 200) {
-          const response = JSON.parse(xhr.responseText);
-          console.log('Response:', response);
+        try {
+          if (response.available) {
+            image.style.borderColor = "green";
+          } else {
+            image.style.borderColor = "yellow";
 
-          try {
-            if (response.available) {
-              image.style.backgroundColor = "green";
-              // Enable all time checkboxes
-              timeCheckboxes.forEach((checkbox) => {
-                checkbox.disabled = false;
-              });
-            } else {
-              image.style.backgroundColor = "yellow";
-              // Disable unavailable time checkboxes
-              response.unavailableTimes.forEach((timeSlot) => {
-                const checkbox = document.getElementById(timeSlot);
-                if (checkbox) {
-                  checkbox.disabled = true;
-                  checkbox.classList.add("disabled-checkbox");
-                } else {
-                  console.log('Checkbox not found for time slot:', timeSlot);
-                }
-              });
-            }
-          } catch (error) {
-            console.error('Error parsing JSON response:', error);
+            // Disable unavailable time checkboxes
+            response.unavailableTimes.forEach((timeSlot) => {
+              const checkbox = document.getElementById(timeSlot);
+              if (checkbox) {
+                checkbox.disabled = true;
+                checkbox.classList.add("disabled-checkbox");
+              } else {
+                console.log('Checkbox not found for time slot:', timeSlot);
+              }
+            });
           }
-        } else {
-          // Handle the request error here
-          console.error('Request failed with status:', xhr.status);
+        } catch (error) {
+          console.error('Error parsing JSON response:', error);
         }
+      } else {
+        // Handle the request error here
+        console.error('Request failed with status:', xhr.status);
       }
-    };
+    }
+  };
+
+  // Send the request
+  xhr.send(data);
+}
 
 
-    // Send the request
-    xhr.send(data);
-  }
+
+// JavaScript code for checking room availability and setting border color
+function checkRoom() {
+  // Get the selected date and room name
+  const selectedDate = document.getElementById('evtStarts').value;
+  const selectedRoom = document.getElementById('roomko').value;
+
+  // Send an AJAX request to the server to check availability
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "check_room.php", true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+  // Define the data to be sent in the request
+  const data = `roomName=${selectedRoom}&selectedDate=${selectedDate}`;
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) { // Check readyState only once
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log('Selected Date:', selectedDate);
+        console.log('Response:', response);
+
+        try {
+          const color = response.color;
+
+          if (color === "green") {
+            // Room has no appointments, set border color to green
+            document.getElementById("changeImageBackground").style.borderColor = "green";
+          } else if (color === "yellow") {
+            // Room has some appointments but not all, set border color to yellow
+            document.getElementById("changeImageBackground").style.borderColor = "yellow";
+          } else if (color === "red") {
+            // Room has all appointments, set border color to red
+            document.getElementById("changeImageBackground").style.borderColor = "red";
+          }
+        } catch (error) {
+          console.error('Error parsing JSON response:', error);
+        }
+      } else {
+        // Handle the request error here
+        console.error('Request failed with status:', xhr.status);
+      }
+    }
+  };
+
+  // Send the request
+  xhr.send(data);
+}
+
+// Add an event listener to trigger the room availability check when the date or room selection changes
+document.getElementById('evtStarts').addEventListener('change', checkRoom);
+document.getElementById('roomko').addEventListener('change', checkRoom);
+
+
+
+
 
   // For Image sliding
   const slides = document.querySelector(".slides");

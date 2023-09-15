@@ -90,22 +90,23 @@ input[type="checkbox"]:focus {
 
 input[type="checkbox"]:disabled {
   --form-control-color: var(--form-control-disabled);
-  color: var(--form-control-disabled);
+  color: #E5E3E4;
   cursor: not-allowed;
 }
 
 input[type="checkbox"]:disabled::after {
-  content: "X";
-  color: red;
+  content: "✖";
+  color: rgb(216, 102, 102);
   display: inline-block;
   width: 20px; /* Adjust the size as needed */
   height: 20px; /* Adjust the size as needed */
   text-align: center;
   vertical-align: middle;
-  background-color: #ccc; /* Background color for the "X" mark */
-  border: 1px solid #999; /* Border for the container */
-  border-radius: 4px; /* Rounded corners for the container */
-  margin-top: -7px;
+  /* background-color: red; Background color for the "X" mark */
+  border: none; /* Border for the container */
+  border-radius: 50px; /* Rounded corners for the container */
+  margin-top: -9px;
+  padding-top: 2px;
 }
 
 
