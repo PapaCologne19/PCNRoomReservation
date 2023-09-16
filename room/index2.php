@@ -406,9 +406,6 @@ if (isset($_POST['SubButton'])) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
 
-  <!-- Bootstrap -->
-
-
 </head>
 
 <body>
@@ -952,34 +949,38 @@ if (isset($_POST['SubButton'])) {
               <div class="modal-body2">
 
                 <center>
-                  <div class="container">
-                    <div class="row">
+                  <?php
+                  $query = "SELECT * FROM rooms";
+                  $result = $connect->query($query);
+                  $imageUrls = array();
+
+                  // Fetch and store image URLs in the array
+                  if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                      $imageUrls[] = $row["image"];
+                      $roomName[] = $row['rooms'];
+                      $descriptions[] = $row['description'];
+                    }
+                  }
+                  ?>
+                  <div class="slider-container">
+                    <div class="slides">
                       <?php
-                      $query = "SELECT * FROM rooms";
-                      $result = $connect->query($query);
-                      $imageUrls = array();
-
-                      // Fetch and store image URLs in the array
-                      if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                          $imageUrl = $row["image"];
-                          $roomName = $row['rooms'];
-                          $descriptions = $row['description'];
-
+                      // Loop through the image URLs and generate <figure> elementsonclick="checkRoomAvailability(this.value)"
+                      foreach ($imageUrls as $index => $imageUrl) {
+                        echo '<figure style="--index:' . $index . '">'; ?>
+                        <img src="images/<?php echo $imageUrl; ?>" id="changeImageBackground" alt="logo" width="285" height="285" onclick="selectRoom('<?php echo $roomName[$index]; ?>');">
+                      <?php
+                        echo '<h1>' . $roomName[$index] . '</h1>';
+                        echo '<h5>' . $descriptions[$index] . '</h5>';
+                        echo '</figure>';
+                      }
                       ?>
-                          <div class="col-md-4" >
-                            <img src="images/<?php echo $imageUrl; ?>" id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>" alt="logo" width="285" height="285" onclick="selectRoom('<?php echo $roomName; ?>');">
-                            <h4><?php echo $roomName; ?></h3>
-                              <div class="card-body">
-                                <p style="text-align: justify; text-indent: ;"><?php echo $descriptions ?></p>
-                              </div>
-                          </div>
 
-
-                      <?php  }
-                      } ?>
                     </div>
                   </div>
+                  <button class="prev">&#10094</button>
+                  <button class="next">&#10095</button>
                 </center>
               </div>
             </div>
@@ -1210,122 +1211,170 @@ if (isset($_POST['SubButton'])) {
 
 
   function checkRoomAvailability() {
-    // Reset checkbox states (enable all checkboxes)
-    document.querySelectorAll('.time-checkbox').forEach((checkbox) => {
-      checkbox.disabled = false;
-    });
+  // Reset checkbox states (enable all checkboxes)
+  document.querySelectorAll('.time-checkbox').forEach((checkbox) => {
+    checkbox.disabled = false;
+  });
 
-    // Rest of your code...
-    const image = document.getElementById("changeImageBackground");
-    const timeCheckboxes = document.querySelectorAll('.time-checkbox');
+  // Rest of your code...
+  const image = document.getElementById("changeImageBackground");
+  const timeCheckboxes = document.querySelectorAll('.time-checkbox');
 
-    console.log('Selected:', selectedDate);
-    console.log('Selected:', selectedRoom);
+  console.log('Selected:', selectedDate);
+  console.log('Selected:', selectedRoom);
 
-    // Send an AJAX request to the server to check availability
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "check_availability.php", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  // Send an AJAX request to the server to check availability
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "check_availability.php", true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    // Define the data to be sent in the request
-    const data = `roomName=${selectedRoom}&selectedDate=${selectedDate}`;
+  // Define the data to be sent in the request
+  const data = `roomName=${selectedRoom}&selectedDate=${selectedDate}`;
 
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) { // Check readyState only once
-        if (xhr.status === 200) {
-          const response = JSON.parse(xhr.responseText);
-          console.log('Response:', response);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) { // Check readyState only once
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log('Response:', response);
 
-          try {
-            if (response.available) {
-              
-            } else {
-              
+        try {
+          if (response.available) {
+            image.style.borderColor = "green";
+          } else {
+            image.style.borderColor = "yellow";
 
-              // Disable unavailable time checkboxes
-              response.unavailableTimes.forEach((timeSlot) => {
-                const checkbox = document.getElementById(timeSlot);
-                if (checkbox) {
-                  checkbox.disabled = true;
-                  checkbox.classList.add("disabled-checkbox");
-                } else {
-                  console.log('Checkbox not found for time slot:', timeSlot);
-                }
-              });
-            }
-          } catch (error) {
-            console.error('Error parsing JSON response:', error);
-          }
-        } else {
-          // Handle the request error here
-          console.error('Request failed with status:', xhr.status);
-        }
-      }
-    };
-
-    // Send the request
-    xhr.send(data);
-  }
-
-
-  // JavaScript code for checking room availability and setting border color
-  function checkRoom() {
-    // Get the selected date
-    const selectedDate = document.getElementById('evtStarts').value;
-
-    // Send an AJAX request to the server to check availability
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "check_room.php", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-    // Define the data to be sent in the request (only selectedDate)
-    const data = `selectedDate=${selectedDate}`;
-
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) { // Check readyState only once
-        if (xhr.status === 200) {
-          const response = JSON.parse(xhr.responseText);
-          console.log('Selected Date:', selectedDate);
-          console.log('Response:', response);
-
-          try {
-            // Loop through the response to set border colors for each room
-            for (const roomName in response) {
-              const color = response[roomName];
-              console.log('Response:', color);
-
-              // Convert room name to a suitable format for id (lowercase, replace spaces with hyphens)
-              const roomId = roomName.toLowerCase().replace(/ /g, '-');
-
-              // Try to find an element with this id
-              const roomElement = document.getElementById(roomId);
-
-              // If such an element exists, change its border color
-              if (roomElement) {
-                roomElement.style.borderColor = color;
-                roomElement.style.borderWidth = "10px";
-                roomElement.style.borderStyle = "solid";
-                roomElement.style.borderRadius = "10px";
+            // Disable unavailable time checkboxes
+            response.unavailableTimes.forEach((timeSlot) => {
+              const checkbox = document.getElementById(timeSlot);
+              if (checkbox) {
+                checkbox.disabled = true;
+                checkbox.classList.add("disabled-checkbox");
               } else {
-                console.error('No element found with id:', roomId);
+                console.log('Checkbox not found for time slot:', timeSlot);
               }
-            }
-          } catch (error) {
-            console.error('Error parsing JSON response:', error);
+            });
           }
-        } else {
-          // Handle the request error here
-          console.error('Request failed with status:', xhr.status);
+        } catch (error) {
+          console.error('Error parsing JSON response:', error);
         }
+      } else {
+        // Handle the request error here
+        console.error('Request failed with status:', xhr.status);
       }
-    };
+    }
+  };
 
-    // Send the request
-    xhr.send(data);
+  // Send the request
+  xhr.send(data);
+}
+
+
+
+// JavaScript code for checking room availability and setting border color
+function checkRoom() {
+  // Get the selected date and room name
+  const selectedDate = document.getElementById('evtStarts').value;
+  const selectedRoom = document.getElementById('roomko').value;
+
+  // Send an AJAX request to the server to check availability
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "check_room.php", true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+  // Define the data to be sent in the request
+  const data = `roomName=${selectedRoom}&selectedDate=${selectedDate}`;
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) { // Check readyState only once
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log('Selected Date:', selectedDate);
+        console.log('Response:', response);
+
+        try {
+          const color = response.color;
+
+          if (color === "green") {
+            // Room has no appointments, set border color to green
+            document.getElementById("changeImageBackground").style.borderColor = "green";
+          } else if (color === "yellow") {
+            // Room has some appointments but not all, set border color to yellow
+            document.getElementById("changeImageBackground").style.borderColor = "yellow";
+          } else if (color === "red") {
+            // Room has all appointments, set border color to red
+            document.getElementById("changeImageBackground").style.borderColor = "red";
+          }
+        } catch (error) {
+          console.error('Error parsing JSON response:', error);
+        }
+      } else {
+        // Handle the request error here
+        console.error('Request failed with status:', xhr.status);
+      }
+    }
+  };
+
+  // Send the request
+  xhr.send(data);
+}
+
+// Add an event listener to trigger the room availability check when the date or room selection changes
+document.getElementById('evtStarts').addEventListener('change', checkRoom);
+document.getElementById('roomko').addEventListener('change', checkRoom);
+
+
+
+
+
+  // For Image sliding
+  const slides = document.querySelector(".slides");
+  const slidesCount = document.querySelectorAll(".slides img").length;
+  let index = 0;
+  let deg = 360 / slidesCount;
+  const imgs = document.querySelectorAll(".slides img");
+
+  document.querySelector(".next").addEventListener("click", () => {
+    // Remove the 'selected-image' class from the previously selected image
+    imgs[index].classList.remove("selected-image");
+
+    index++;
+    if (index >= slidesCount) {
+      index = 0;
+    }
+
+    // Add the 'selected-image' class to the current image
+    imgs[index].classList.add("selected-image");
+
+    move();
+  });
+
+  document.querySelector(".prev").addEventListener("click", () => {
+    // Remove the 'selected-image' class from the previously selected image
+    imgs[index].classList.remove("selected-image");
+
+    index--;
+    if (index < 0) {
+      index = slidesCount - 1;
+    }
+
+    // Add the 'selected-image' class to the current image
+    imgs[index].classList.add("selected-image");
+
+    move();
+  });
+
+  function move() {
+    const rotation = deg * index;
+    slides.style.transition = "transform 0.5s ease-in";
+    slides.style.transform = `perspective(1000px) rotateY(-${rotation}deg)`;
   }
 
-  // Add an event listener to trigger the room availability check when the date selection changes
-  document.getElementById('evtStarts').addEventListener('change', checkRoom);
+  // Initialize the slider when the DOM is ready
+  document.addEventListener("DOMContentLoaded", function() {
+    move(); // Initialize the slider at the first image
+    // Add 'selected-image' class to the initial image
+    imgs[index].classList.add("selected-image");
+  });
 </script>
 
 </html>
