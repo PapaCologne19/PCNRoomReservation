@@ -235,48 +235,6 @@ if (isset($_POST['SubButton'])) {
   $new_date = Date('H:i a', $string_to_date);
 
 
-  // Get the next available column number
-  $nextColumnNumber = 1;
-  $sql = "SELECT MAX(columnNumber) AS maxColumnNumber FROM events";
-  $result = mysqli_query($connect, $sql);
-
-  if ($result) {
-    if (mysqli_num_rows($result) > 0) {
-      $row = mysqli_fetch_assoc($result);
-      $nextColumnNumber = $row["maxColumnNumber"] + 1;
-    } else {
-      // Handle the case where there are no rows in the result set
-      $nextColumnNumber = 1; // Or any other default value you want to set
-    }
-  } else {
-    // Handle the case where the query failed
-    $nextColumnNumber = -1; // Or any other default value indicating a failure
-  }
-
-  // $sql = "SELECT * FROM events WHERE (x67 = '$x67v' OR x78 = '$x78v' OR x89 = '$x89v' OR x910 = '$x910v' 
-  //         OR x1011 = '$x1011v' OR x1112 = '$x1112v' OR x121 = '$x121v' OR x12 = '$x12v' OR x23 = '$x23v' 
-  //         OR x34 = '$x34v' OR x45 = '$x45v' OR x56 = '$x56v') AND evt_start = '$evtStart'";
-
-  // Check if there is existing data for the specified date in any of the columns
-  $sql = "SELECT COUNT(*) AS existingDataCount FROM events WHERE 
-          (x67 = '$x67v' AND x78 = '$x78v' AND x89 = '$x89v' AND x910 = '$x910v' 
-          AND x1011 = '$x1011v' AND x1112 = '$x1112v' AND x121 = '$x121v' 
-          AND x12 = '$x12v' AND x23 = '$x23v' AND x34 = '$x34v' AND x45 = '$x45v' 
-          AND x56 = '$x56v') AND evt_start = '$evtStart'";
-
-  $result = mysqli_query($connect, $sql);
-
-  if ($result) {
-    $row = mysqli_fetch_assoc($result);
-    $existingDataCount = $row["existingDataCount"];
-
-    // echo "Existing Data Count: $existingDataCount"; // Debugging line,
-
-    if ($existingDataCount > 0) {
-      // Data already exists for the specified date in one of the columns, do not insert
-      // You can return an error message or handle it accordingly
-      echo "";
-    } else {
       // No existing data, proceed with the insertion
       $query = "INSERT INTO events (
           evt_start, evt_end, evt_text, evt_color, evt_bg, qty, projector, whiteboard, ext_cord, sound, sound_simple, sound_advance, basic_lights,
@@ -292,11 +250,8 @@ if (isset($_POST['SubButton'])) {
         // Handle the case where the insertion query failed
         echo "Insertion failed.";
       }
-    }
-  } else {
-    // Handle the case where the query to check existing data failed
-    $nextColumnNumber = -1; // Or any other default value indicating a failure
-  }
+    
+ 
 
 
 
@@ -404,8 +359,7 @@ if (isset($_POST['SubButton'])) {
   <!-- Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Julius+Sans+One&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
   <!-- Bootstrap -->
 
 
@@ -437,7 +391,7 @@ if (isset($_POST['SubButton'])) {
 
   <!-- (B) PERIOD SELECTOR -->
   <div id="calHead">
-    <div id="calPeriod">
+    <div id="calPeriod" style="width: 50%;">
       <input id="calBack" type="button" class="mi" value="&lt;">
       <select id="calMonth"><?php foreach ($months as $m => $mth) {
                               printf(
@@ -450,6 +404,9 @@ if (isset($_POST['SubButton'])) {
       <input id="calYear" type="number" value="<?= $yearNow ?>">
       <input id="calNext" type="button" class="mi" value="&gt;">
     </div>
+    <center>
+      <img src="images/pcn.png" alt="" width="10%">
+    </center>
     <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
     <button type="button" class="gbutton btn btn-primary" data-toggle="modal" data-target="#myModal" style="float:right">Add Appointment</button> &nbsp;
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right">Add Room</button>
@@ -474,25 +431,31 @@ if (isset($_POST['SubButton'])) {
       <div id="evtCX">&times;</div>
       <h2 class="evt100">CALENDAR EVENT</h2>
 
-      <div class="evt50">
+      <div class="evt100">
+        <label for=""> Requestor</label>
+        <input type="text" name="evtRequestor" id="evtRequestor" disabled>
+      </div>
+
+      <div class="evt100">
         <label>Start Date</label>
         <input id="evtStart" name="evtStart" type="text" disabled onclick="fwriteme()">
       </div>
 
-      <div class="evt50">
-        <label for="">End Date</label>
+      <div class="evt100">
+        <label for="">Time</label>
         <input type="text" name="evtEnd" id="evtEnd" disabled>
       </div>
 
-      <div class="evt50">
+      <div class="evt100">
         <input id="evtColor" type="color" value="#000000" style="display:none !important;">
       </div>
-
       <div class="evt100">
-        <label for="">Set Color</label>
+        <label for="">Status</label>
         <input id="evtBG" type="color" value="#11ff00" required>
         <label>(RED = Reject, GREEN = Approve, YELLOW = Pending)</label>
       </div>
+
+      
 
       <div class="evt100">
         <label>Room</label>
@@ -528,6 +491,8 @@ if (isset($_POST['SubButton'])) {
         <label for="">Room Orientation</label>
         <input type="text" name="evtRoomOrientation" id="evtRoomOrientation" disabled>
       </div>
+
+      
 
       <div class="evt100">
         <input type="hidden" id="evtID">
@@ -572,8 +537,9 @@ if (isset($_POST['SubButton'])) {
             </div>
 
             <br><br>
-            <div class="mb-3">
-              <button type="submit" class="btn btn-primary" name="addRoom" id="addRoom">Add</button>
+            <div class="mb-3" style="float: right;">
+              <button type="submit" class="btn btn-success" name="addRoom" id="addRoom">Add</button> 
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
 
           </form>
@@ -597,7 +563,7 @@ if (isset($_POST['SubButton'])) {
         <div class="modal-body">
         </div>
 
-        <div class="row">
+        <div class="row" style="margin: 10px !important;">
           <div class="column">
             <div class="card">
 
@@ -610,13 +576,13 @@ if (isset($_POST['SubButton'])) {
                     <input id="evtStarts" name="evtStart" type="date" onchange="checkRoom()" required>
 
                   </div>
-                  <label for="">Select Room</label>
-                  <button type="button" class="btn btn-warning" id="selectingRoomButton" onclick="$('#myModalroom').modal('show');" aria-label="Close" required> Please select </button>
+                  <button type="button" class="btn btn-warning" id="selectingRoomButton" aria-label="Close" required style="display: none;"> Please select </button>
                   <input type="text" name="roomko" id="roomko" class="form-control" placeholder="Place of Meeting" style="height:45px;width:250px;" required readonly>
                   <p id="result"></p>
-                  <br>
-                  <br>
-                  <input type="number" name="qty" id="qty" class="form-control" placeholder="Qty" style="height:45px;width:250px;" required>
+                  <div class="mb-3">
+                    <label for="" class="form-label">Input Quantity</label>
+                    <input type="number" name="qty" id="qty" class="form-control" placeholder="Qty" style="height:45px;width:250px;" required>
+                  </div>
 
               </center>
 
@@ -776,22 +742,22 @@ if (isset($_POST['SubButton'])) {
 
               <center>
                 <label class="form-control" style="text-align:left">
-                  <input type="radio" name="roomOrientation" value="Classroom" onclick="fdisplay1x()" checked /><a href="#" onclick="$('#myModalroomClassroom').modal('show');" aria-label="Close" style="display: inline; text-align: left; font-size: 1.1rem; text-decoration: none; color: #555555;">Class Room (Tables and chairs) <u style="text-decoration: underline; font-size: .8rem;">Click Me</u> </a>
+                  <input type="radio" name="roomOrientation" value="Classroom" onclick="fdisplay1x()" checked /><a href="#" onclick="$('#myModalroomClassroom').modal('show');" aria-label="Close" style="display: inline; text-align: left; font-size: 1.3rem; text-decoration: none; color: #555555;">Class Room (Tables and chairs)  <img src="images/classroom.png" alt="picture" style="float: right;" width="10%"> </a>
                 </label>
 
                 <label class="form-control" style="text-align:left">
                   <input type="radio" name="roomOrientation" value="Workshop" onclick="fdisplay1x()" />
-                  <a href="#" onclick="$('#myModalroomworkshop').modal('show');" aria-label="Close" style="display: inline; text-align: left; font-size: 1.1rem; text-decoration: none; color: #555555;">Workshop <u style="text-decoration: underline; font-size: .8rem;">Click Me</u> </a>
+                  <a href="#" onclick="$('#myModalroomworkshop').modal('show');" aria-label="Close" style="display: inline; text-align: left; font-size: 1.5rem; text-decoration: none; color: #555555;">Workshop <img src="images/workshop.png" alt="picture" style="float: right;" width="10%"> </a>
                 </label>
 
                 <label class="form-control" style="text-align:left">
                   <input type="radio" name="roomOrientation" value="Training" onclick="fdisplay1x()" />
-                  <a href="#" onclick="$('#myModalroomTraining').modal('show');" aria-label="Close" style="display: inline; text-align: left; font-size: 1.1rem; text-decoration: none; color: #555555;">Training (All Chairs) <u style="text-decoration: underline; font-size: .8rem;">Click Me</u> </a>
+                  <a href="#" onclick="$('#myModalroomTraining').modal('show');" aria-label="Close" style="display: inline; text-align: left; font-size: 1.5rem; text-decoration: none; color: #555555;">Training (All Chairs) <img src="images/trainingroom.png" alt="picture" style="float: right;" width="10%"> </a>
                 </label>
 
                 <label class="form-control" style="text-align:left">
                   <input type="radio" name="roomOrientation" value="Open" onclick="fdisplay1x()" />
-                  <a href="#" onclick="$('#myModalroomOpen').modal('show');" aria-label="Close" style="display: inline; text-align: left; font-size: 1.1rem; text-decoration: none; color: #555555;">Open <u style="text-decoration: underline; font-size: .8rem;">Click Me</u> </a>
+                  <a href="#" onclick="$('#myModalroomOpen').modal('show');" aria-label="Close" style="display: inline; text-align: left; font-size: 1.5rem; text-decoration: none; color: #555555;">Open <img src="images/openroom.png" alt="picture" style="float: right;" width="10%"> </a>
 
                 </label>
 
@@ -855,8 +821,8 @@ if (isset($_POST['SubButton'])) {
                       <center>
 
                         <center>
-                          <img src="./images/5-Different-styles-of-seating-arrangements.png" id="imgko1" alt="logo" class="" style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
-                          <p>Board Room</p>
+                          <img src="./images/workshop.png" id="imgko1" alt="logo" class="" style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
+                          <p>Workshop Room</p>
                         </center>
                       </center>
 
@@ -886,8 +852,8 @@ if (isset($_POST['SubButton'])) {
                       <center>
 
                         <center>
-                          <img src="./images/5-Different-styles-of-seating-arrangements.png" id="imgko1" alt="logo" class="" style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
-                          <p>Board Room</p>
+                          <img src="./images/trainingroom.png" id="imgko1" alt="logo" class="" style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
+                          <p>Training Room</p>
                         </center>
                       </center>
 
@@ -917,8 +883,8 @@ if (isset($_POST['SubButton'])) {
                       <center>
 
                         <center>
-                          <img src="./images/5-Different-styles-of-seating-arrangements.png" id="imgko1" alt="logo" class="" style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
-                          <p>Board Room</p>
+                          <img src="./images/openroom.png" id="imgko1" alt="logo" class="" style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
+                          <p>Open Room</p>
                         </center>
                       </center>
 
@@ -927,7 +893,7 @@ if (isset($_POST['SubButton'])) {
                 </div>
               </div>
 
-
+              <br><br><br><br>
               <input type="submit" name="SubButton" value="Process me" class="btn btn-primary loginButton" style="margin-top: 1.5rem;">
 
               </form>
@@ -1219,8 +1185,6 @@ if (isset($_POST['SubButton'])) {
     const image = document.getElementById("changeImageBackground");
     const timeCheckboxes = document.querySelectorAll('.time-checkbox');
 
-    console.log('Selected:', selectedDate);
-    console.log('Selected:', selectedRoom);
 
     // Send an AJAX request to the server to check availability
     const xhr = new XMLHttpRequest();
@@ -1234,7 +1198,6 @@ if (isset($_POST['SubButton'])) {
       if (xhr.readyState === 4) { // Check readyState only once
         if (xhr.status === 200) {
           const response = JSON.parse(xhr.responseText);
-          console.log('Response:', response);
 
           try {
             if (response.available) {
@@ -1270,6 +1233,8 @@ if (isset($_POST['SubButton'])) {
 
   // JavaScript code for checking room availability and setting border color
   function checkRoom() {
+    $('#myModalroom').modal('show');
+
     // Get the selected date
     const selectedDate = document.getElementById('evtStarts').value;
 
@@ -1285,14 +1250,11 @@ if (isset($_POST['SubButton'])) {
       if (xhr.readyState === 4) { // Check readyState only once
         if (xhr.status === 200) {
           const response = JSON.parse(xhr.responseText);
-          console.log('Selected Date:', selectedDate);
-          console.log('Response:', response);
 
           try {
             // Loop through the response to set border colors for each room
             for (const roomName in response) {
               const color = response[roomName];
-              console.log('Response:', color);
 
               // Convert room name to a suitable format for id (lowercase, replace spaces with hyphens)
               const roomId = roomName.toLowerCase().replace(/ /g, '-');

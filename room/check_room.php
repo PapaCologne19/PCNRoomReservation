@@ -41,14 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if ($allAppointments) {
                     // Room has all appointments, set the response to red
-                    $roomAvailability[$roomName] = 'red';
+                    $roomAvailability[$roomName] = '#dc3545';
                 } else {
                     // Room has some appointments but not all, set the response to yellow
-                    $roomAvailability[$roomName] = 'yellow';
+                    $roomAvailability[$roomName] = '#ffc107';
                 }
             } else {
                 // Room has no appointments, set the response to green
-                $roomAvailability[$roomName] = 'green';
+                $roomAvailability[$roomName] = '#198754';
             }
         }
     }

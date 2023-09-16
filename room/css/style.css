@@ -17,6 +17,12 @@ body {
   margin: 0;
 }
 
+h3{
+  font-weight: 900;
+  color: red;
+  text-transform: uppercase;
+}
+
 form {
   display: grid;
   place-content: center;
@@ -32,6 +38,7 @@ form {
   grid-template-columns: 1em auto;
   gap: 0.5em;
   border: none;
+  background-color: transparent;
 }
 
 .form-control+.form-control {
