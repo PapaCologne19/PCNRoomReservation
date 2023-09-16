@@ -27,7 +27,7 @@ if ($result) {
 
     // Create an array to store the selected time ranges
     $selectedTimeRanges = [];
-
+    
     foreach ($timeMapping as $column => $timeRange) {
         // Check if the column has data (assuming 1 indicates it's selected)
         if ($row[$column] == "Deo Villavicencio") {

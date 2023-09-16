@@ -240,7 +240,7 @@ if (isset($_POST['SubButton'])) {
           evt_start, evt_end, evt_text, evt_color, evt_bg, qty, projector, whiteboard, ext_cord, sound, sound_simple, sound_advance, basic_lights,
           cleanup, cleanup_before, cleanup_after, others, others1, allday, x67, x78, x89, x910, x1011, x1112, x121, x12, x23, x34, x45, x56, room_orientation, status
         ) VALUES (
-          '$evtStart', '$evtEnd', '$roomko', '#000000', '#fbff00', '$qty', '$cprojector', '$cwhiteboard', '$cextn', 'sound', '$radios', '$radioa', '$basicl',
+          '$evtStart', '$evtEnd', '$roomko', '#000000', '#e0c23b', '$qty', '$cprojector', '$cwhiteboard', '$cextn', 'sound', '$radios', '$radioa', '$basicl',
           'cleanup', '$c_before', '$c_after', 'others', '$others_rem', '$c_alldayv', '$x67v', '$x78v', '$x89v', '$x910v', '$x1011v', '$x1112v', '$x121v', '$x12v', '$x23v', '$x34v', '$x45v', '$x56v', '$room_orientation', '$status'
         )";
 
@@ -391,7 +391,7 @@ if (isset($_POST['SubButton'])) {
 
   <!-- (B) PERIOD SELECTOR -->
   <div id="calHead">
-    <div id="calPeriod" style="width: 50%;">
+    <div id="calPeriod" style="width: 70%;">
       <input id="calBack" type="button" class="mi" value="&lt;">
       <select id="calMonth"><?php foreach ($months as $m => $mth) {
                               printf(
@@ -405,7 +405,7 @@ if (isset($_POST['SubButton'])) {
       <input id="calNext" type="button" class="mi" value="&gt;">
     </div>
     <center>
-      <img src="images/pcn.png" alt="" width="10%">
+      <img src="images/pcn.png" alt="" width="15%">
     </center>
     <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
     <button type="button" class="gbutton btn btn-primary" data-toggle="modal" data-target="#myModal" style="float:right">Add Appointment</button> &nbsp;
@@ -450,10 +450,13 @@ if (isset($_POST['SubButton'])) {
         <input id="evtColor" type="color" value="#000000" style="display:none !important;">
       </div>
       <div class="evt100">
-        <label for="">Status</label>
-        <input id="evtBG" type="color" value="#11ff00" required>
-        <label>(RED = Reject, GREEN = Approve, YELLOW = Pending)</label>
-      </div>
+        <label for="" class="form-label">Status</label>
+        <select name="evtBG" id="evtBG" class="form-control" aria-placeholder="select">
+          <option value="#80c87e">Green (Approve)</option>
+          <option value="#e0c23b">Yellow (Pending)</option>
+          <option value="#f47171">Red (Rejected)</option>
+        </select>
+        </div>
 
       
 
@@ -566,7 +569,7 @@ if (isset($_POST['SubButton'])) {
         <div class="row" style="margin: 10px !important;">
           <div class="column">
             <div class="card">
-
+            <h3>Date</h3>
               <center>
                 <form action="" method="POST">
                   <div class="evt50">

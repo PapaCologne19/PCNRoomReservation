@@ -93,7 +93,7 @@ class Calendar
     // s & e : start & end date
     // c & b : text & background color
     // t : event text
-    $this->query("SELECT *,DATE_FORMAT(evt_start, '%M %d, %Y')as formatted_date FROM `events` WHERE (
+    $this->query("SELECT * FROM `events` WHERE (
       (`evt_start` BETWEEN ? AND ?)
       OR (`evt_end` BETWEEN ? AND ?)
       OR (`evt_start` <= ? AND `evt_end` >= ?)
@@ -103,7 +103,7 @@ class Calendar
     $events = [];
     while ($r = $this->stmt->fetch()) {
       $events[$r["evt_id"]] = [
-        "s" => $r["formatted_date"], "e" => $r["evt_end"],
+        "s" => $r["evt_start"], "e" => $r["evt_end"],
         "c" => $r["evt_color"], "b" => $r["evt_bg"],
         "t" => $r["evt_text"], "q" => $r["qty"], "time" => $r["allday"],
         "projector" => $r["projector"], "whiteboard" => $r["whiteboard"],
