@@ -1,4 +1,5 @@
 <?php
+session_start();
 class Calendar
 {
   // (A) CONSTRUCTOR - CONNECT TO DATABASE
@@ -40,20 +41,17 @@ class Calendar
 
 
   // (D) SAVE EVENT
-  function save($start, $end, $txt, $color, $bg, $id = null)
+  function save($start, $end, $txt, $color, $bg , $id = null)
   {
-    // (D1) START & END DATE CHECK
-    // if (strtotime($end) < strtotime($start)) {
-    //   $this->error = "End date cannot be earlier than start date";
-    //   return false;
-    // }
+      $bg = "#80c87e";
 
     // (D2) RUN SQL
     if ($id === null) {
       $sql = "INSERT INTO `events` (`evt_start`, `evt_end`, `evt_text`, `evt_color`, `evt_bg`) VALUES (?,?,?,?,?)";
       $data = [$start, $end, strip_tags($txt), $color, $bg];
     } else {
-      $sql = "UPDATE `events` SET `evt_start`=?, `evt_end`=?, `evt_text`=?, `evt_color`=?, `evt_bg`=? WHERE `evt_id`=?";
+      $sql = "UPDATE `events` SET `evt_start`= ?, `evt_end`= ?, `evt_text`= ?, `evt_color`= ?, `evt_bg`= ?  
+      WHERE `evt_id`= ?";
       $data = [$start, $end, strip_tags($txt), $color, $bg, $id];
 
       // $sql = "UPDATE `events` SET `evt_start`=?, `evt_end`=?, `evt_text`=?, `evt_color`=?, `evt_bg`=? WHERE `evt_id`=?";
@@ -69,9 +67,16 @@ class Calendar
 
 
   // (E) DELETE EVENT
-  function del($id)
+  function del($bg, $id)
   {
-    $this->query("DELETE FROM `events` WHERE `evt_id`=?", [$id]);
+    $bg = "#f47171";
+
+    if ($id != null) {
+      $sql = "UPDATE `events` SET `evt_bg`= ?  
+      WHERE `evt_id`= ?";
+      $data = [$bg, $id];
+    }
+    $this->query($sql, $data);
     return true;
   }
 
@@ -88,11 +93,14 @@ class Calendar
     $dateYM = "{$year}-{$month}-";
     $start = $dateYM . "01 00:00:00";
     $end = $dateYM . $daysInMonth . " 23:59:59";
-
+    $firstname = $_SESSION['firstname'];
+    $lastname = $_SESSION['lastname'];
     // (F2) GET EVENTS
     // s & e : start & end date
     // c & b : text & background color
     // t : event text
+
+
     $this->query("SELECT * FROM `events` WHERE (
       (`evt_start` BETWEEN ? AND ?)
       OR (`evt_end` BETWEEN ? AND ?)
@@ -111,8 +119,12 @@ class Calendar
         "sound_simple" => $r["sound_simple"], "sound_advance" => $r["sound_advance"],
         "basic_lights" => $r["basic_lights"], "cleanup" => $r["cleanup"],
         "cleanup_before" => $r["cleanup_before"], "cleanup_after" => $r["cleanup_after"],
-        "room_orientation" => $r["room_orientation"]
-      ];
+        "room_orientation" => $r["room_orientation"],
+
+        "x67" => $r["x67"], "x78" => $r["x78"], "x89" => $r["x89"], "x910" => $r["x910"], "x1011" => $r["x1011"], "x1112" => $r["x1112"], "x121" => $r["x121"], "x12" => $r["x12"], "x23" => $r["x23"], "x34" => $r["x34"], "x45" => $r["x45"], "x56" => $r["x56"],
+        "firstname" => $firstname, "lastname" => $lastname
+        
+       ];
     }
 
     // (F3) RESULTS

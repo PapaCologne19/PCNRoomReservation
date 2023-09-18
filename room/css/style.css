@@ -270,3 +270,7 @@ element.style {
   background-color: rgba(255, 0, 0, 0.5) !important;
   /* Red background with some opacity */
 }
+
+.inline-input {
+  display: inline !important;
+}

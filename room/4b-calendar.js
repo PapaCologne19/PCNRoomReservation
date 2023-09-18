@@ -36,7 +36,7 @@ var cal = {
       .then(res => res.text())
       .then(txt => onload(txt))
       .catch(err => console.error(err));
-      
+
 
   },
 
@@ -50,8 +50,24 @@ var cal = {
     cal.hFormWrap = document.getElementById("calForm");
     cal.hForm = cal.hFormWrap.querySelector("form");
     cal.hfID = document.getElementById("evtID");
+    cal.hfRequestor = document.getElementById('evtRequestor');
     cal.hfStart = document.getElementById("evtStart");
+
     cal.hfEnd = document.getElementById("evtEnd");
+    
+    cal.hfEnd1 = document.getElementById("evtEnd1");
+    cal.hfEnd2 = document.getElementById("evtEnd2");
+    cal.hfEnd3 = document.getElementById("evtEnd3");
+    cal.hfEnd4 = document.getElementById("evtEnd4");
+    cal.hfEnd5 = document.getElementById("evtEnd5");
+    cal.hfEnd6 = document.getElementById("evtEnd6");
+    cal.hfEnd7 = document.getElementById("evtEnd7");
+    cal.hfEnd8 = document.getElementById("evtEnd8");
+    cal.hfEnd9 = document.getElementById("evtEnd9");
+    cal.hfEnd10 = document.getElementById("evtEnd10");
+    cal.hfEnd11 = document.getElementById("evtEnd11");
+    cal.hfEnd12 = document.getElementById("evtEnd12");
+
     cal.hfTxt = document.getElementById("evtTxt");
     cal.hfColor = document.getElementById("evtColor");
     cal.hfBG = document.getElementById("evtBG");
@@ -274,7 +290,71 @@ var cal = {
           rowA = document.getElementById("calRow" + r);
           rowB = document.createElement("div");
           rowB.className = "calRowEvt";
-          rowB.innerHTML = cal.events[id]["t"] + " - " + cal.events[id]["start_time"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          var eventData = cal.events[id]; // Replace 'id' with the actual event ID
+
+          // Replace the hard-coded key "x56" with the event-specific key
+          var eventTimeKey = "x56"; // Replace this with the actual key from your event data
+
+          // Sample raw time data in your PHP array
+          var rawTimeData = {
+            "x67": "6am to 7am",
+            "x78": "7am to 8am",
+            "x89": "8am to 9am",
+            "x910": "9am to 10am",
+            "x1011": "10am to 11am",
+            "x1112": "11am to 12pm",
+            "x121": "12pm to 1pm",
+            "x12": "1pm to 2pm",
+            "x23": "2pm to 3pm",
+            "x34": "3pm to 4pm",
+            "x45": "4pm to 5pm",
+            "x56": "5pm to 6pm"
+          };
+
+          // Convert and format the time data for the event-specific key
+          var rawTime = rawTimeData[eventTimeKey];
+
+          var times = rawTime.split(" to ");
+          var startTime = times[0];
+          var endTime = times[1];
+
+          // You can format the time as needed, for example:
+          // 6am to 7am => 06:00 AM - 07:00 AM
+          // Format hours and minutes as needed
+          var formattedStartTime = startTime.replace("am", "AM").replace("pm", "PM");
+          var formattedEndTime = endTime.replace("am", "AM").replace("pm", "PM");
+
+          // Create a formatted time string
+          var formattedTime = formattedStartTime + " - " + formattedEndTime;
+
+          // rowB.innerHTML = cal.events[id]["t"] + " - " + formattedTime;
+
+
+
+
+
+          rowB.innerHTML = cal.events[id]["t"] + " - " + cal.events[id]["firstname"] + cal.events[id]["lastname"];
+
+
+
           rowB.style.color = cal.events[id]["c"];
           rowB.style.backgroundColor = cal.events[id]["b"];
           rowB.classList.add("w" + w);
@@ -292,8 +372,9 @@ var cal = {
   show: id => {
     if (id) {
       cal.hfID.value = id;
+      cal.hfRequestor.value = cal.events[id]["firstname"]+ " " + cal.events[id]["lastname"];
       cal.hfStart.value = cal.events[id]["s"];
-      cal.hfEnd.value = cal.events[id]["e"];
+      // cal.hfEnd.value = cal.events[id]["e"];
       cal.hfQuantity.value = cal.events[id]["q"];
 
       // Projector
@@ -342,10 +423,95 @@ var cal = {
         cal.hfCleanup.value = "";
       }
 
-      // Time
-      cal.hfAllday.value = cal.events[id]["time"];
-      cal.hfRoomOrientation.value = cal.events[id]["room_orientation"];
 
+      // Time
+      var firstName = cal.events[id]["firstname"];
+      var lastName = cal.events[id]["lastname"];
+      var fullName = firstName + lastName;
+
+      
+      
+      if (cal.hfEnd1.value = cal.events[id]["x67"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd1.value = "6AM to 7AM";
+      } else {
+        cal.hfEnd1.value = "";
+      }
+      if (cal.hfEnd2.value = cal.events[id]["x78"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd2.value = "7AM to 8AM";
+      } else {
+        cal.hfEnd2.value = "";
+      }
+      if (cal.hfEnd3.value = cal.events[id]["x89"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd3.value = "8AM to 9AM";
+      } else {
+        cal.hfEnd3.value = "";
+      }
+      if (cal.hfEnd4.value = cal.events[id]["x910"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd4.value = "9AM to 10AM";
+      } else {
+        cal.hfEnd4.value = "";
+      }
+      if (cal.hfEnd5.value = cal.events[id]["x1011"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd5.value = "10AM to 11AM";
+      } else {
+        cal.hfEnd5.value = "";
+      }
+      if (cal.hfEnd6.value = cal.events[id]["x1112"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd6.value = "11AM to 12PM";
+      } else {
+        cal.hfEnd6.value = "";
+      }
+      if (cal.hfEnd7.value = cal.events[id]["x121"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd7.value = "12PM to 1PM";
+      } else {
+        cal.hfEnd7.value = "";
+      }
+      if (cal.hfEnd8.value = cal.events[id]["x12"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd8.value = "1PM to 2PM";
+      } else {
+        cal.hfEnd8.value = "";
+      }
+      if (cal.hfEnd9.value = cal.events[id]["x23"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd9.value = "2PM to 3PM";
+      } else {
+        cal.hfEnd9.value = "";
+      }
+      if (cal.hfEnd10.value = cal.events[id]["x34"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd10.value = "3PM to 4PM";
+      } else {
+        cal.hfEnd10.value = "";
+      }
+      if (cal.hfEnd11.value = cal.events[id]["x45"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd11.value = "4PM to 5PM";
+      } else {
+        cal.hfEnd11.value = "";
+      }
+      if (cal.hfEnd12.value = cal.events[id]["x56"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd12.value = "5PM to 6PM";
+      } else {
+        cal.hfEnd12.value = "";
+      }
+
+      if (cal.events[id]["x67"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
+        cal.events[id]["x78"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
+        cal.events[id]["x89"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
+        cal.events[id]["x910"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
+        cal.events[id]["x1011"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
+        cal.events[id]["x1112"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
+        cal.events[id]["x121"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
+        cal.events[id]["x12"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
+        cal.events[id]["x23"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
+        cal.events[id]["x34"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
+        cal.events[id]["x45"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
+        cal.events[id]["x56"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
+        cal.hfEnd.value = "All Day";
+      } else {
+        cal.hfEnd.value = "";
+      }
+
+
+      cal.hfRoomOrientation.value = cal.events[id]["room_orientation"];
+      cal.hfEnd.value = cal.events[id]["e"];
       cal.hfTxt.value = cal.events[id]["t"];
       cal.hfColor.value = cal.events[id]["c"];
       cal.hfBG.value = cal.events[id]["b"];
@@ -377,47 +543,105 @@ var cal = {
     if (cal.hfID.value != "") {
       data.id = cal.hfID.value;
     }
-
-    // (H2) DATE CHECK
-    // if (new Date(data.start) > new Date(data.end)) {
-    //   alert("Start date cannot be later than end date!");
-    //   return false;
-    // }
-
-    // (H3) AJAX SAVE
-    cal.ajax(data, res => {
-      if (res == "OK") {
-        cal.hFormWrap.close();
-        cal.load();
-      } else {
-        alert(res);
+  
+    // (H2) Create a confirmation SweetAlert dialog
+    Swal.fire({
+      title: 'Confirm Save',
+      text: 'Are you sure you want to approve this event?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, approve it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User confirmed the save action
+        // (H3) AJAX SAVE
+        cal.ajax(data, res => {
+          if (res == "OK") {
+            Swal.fire(
+              'Saved!',
+              'Your event has been saved.',
+              'success'
+            ).then(() => {
+              cal.hFormWrap.close();
+              cal.load();
+            });
+          } else {
+            Swal.fire(
+              'Error',
+              res,
+              'error'
+            );
+          }
+        });
       }
     });
+  
     return false;
   },
-
-
-
-
-
-
+  
 
 
   // (I) DELETE EVENT
   del: () => {
-    if (confirm("Delete event?")) {
-      cal.ajax({
-        req: "del",
-        id: cal.hfID.value
-      }, res => {
-        if (res == "OK") {
-          cal.hFormWrap.close();
-          cal.load();
-        } else {
-          alert(res);
-        }
-      });
+    var data = {
+      req: "del",
+      bg: cal.hfBG.value
+    };
+    if (cal.hfID.value != "") {
+      data.id = cal.hfID.value;
     }
+  
+    // Define custom CSS class for the SweetAlert dialog
+    const customClass = {
+      container: 'custom-swal-container',
+      popup: 'custom-swal-popup',
+      header: 'custom-swal-header',
+      title: 'custom-swal-title',
+      closeButton: 'custom-swal-closeButton',
+      content: 'custom-swal-content',
+      actions: 'custom-swal-actions',
+      confirmButton: 'custom-swal-confirmButton',
+      cancelButton: 'custom-swal-cancelButton',
+    };
+  
+    // Display a SweetAlert confirmation dialog with custom size
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, reject it!',
+      customClass: customClass // Apply custom CSS class
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User clicked the "Yes, delete it!" button
+        cal.ajax(data, res => {
+          if (res == "OK") {
+            cal.hFormWrap.close();
+            cal.load();
+          } else {
+            Swal.fire(
+              'Error',
+              res,
+              'error'
+            );
+          }
+        });
+      }
+    });
+  
+    return false;
   }
+  
+
+
+
+
+
 };
 window.onload = cal.init;

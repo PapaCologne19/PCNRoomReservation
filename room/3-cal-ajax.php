@@ -18,6 +18,7 @@ if (isset($_POST["req"])) {
 
     // (D) DELETE EVENT
     case "del":
-      echo $_CAL->del($_POST["id"])  ? "OK" : $_CAL->error;
+      echo $_CAL->del($_POST["bg"], isset($_POST['id']) ? $_POST["id"] : null
+      )  ? "OK" : $_CAL->error;
       break;
 }}

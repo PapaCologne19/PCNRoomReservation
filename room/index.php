@@ -12,7 +12,7 @@ if (isset($_POST['verify'])) {
 
 if (isset($_POST['SubButton'])) {
 
-  $ireserver = "Deo Villavicencio";
+  $ireserver = $_SESSION["firstname"] . $_SESSION["lastname"];
   $evtStart = $_POST['evtStart'];
   $evtEnd = $_POST['evtStart'];
   $roomko = $_POST['roomko'];
@@ -251,63 +251,9 @@ if (isset($_POST['SubButton'])) {
         echo "Insertion failed.";
       }
     
- 
-
-
-
-  //  if(mysqli_num_rows($result) > 0){
-  //   $sql = "INSERT INTO events (column$nextColumnNumber, evt_start) VALUES ('$x910v', '$evtStart')";
-  //   $connect->query($sql);
-  //  }else{
-  // Try
-
-
-  //     mysql_query("INSERT INTO events
-  //       (evt_start, evt_end, evt_text, evt_color, evt_bg,qty,projector,whiteboard,ext_cord,sound,sound_simple,sound_advance,basic_lights,
-  //       cleanup,cleanup_before,cleanup_after,others,others1,allday,x67,x78,x89,x910,x1011,x1112,x121,x12,x23,x34,x45,x56,room_orientation,status)
-  //       VALUES
-  //       ('$evtStart','$evtEnd','$roomko','#000000','#fbff00','$qty','$cprojector','$cwhiteboard','$cextn','sound','$radios','$radioa','$basicl',
-  //       'cleanup','$c_before','$c_after','others','$others_rem','$c_alldayv','$x67v','$x78v','$x89v','$x910v','$x1011v','$x1112v','$x121v','$x12v','$x23v','$x34v','$x45v','$x56v','$room_orientation','$status')
-  //       ");
-
-
-  //   // insert more data to locationpo table for date and location monitoring
-
-  //   $resultE = mysql_query("select * from locationpo WHERE evt_text = '$roomko'  and evt_start='$evtStart'");
-  //   if (mysql_num_rows($resultE) == 0) {
-  //     // kapag walang  kaparehas
-  //     mysql_query("INSERT INTO locationpo
-  // (evt_start, evt_text, evt_color,qty,allday,x67,x78,x89,x910,x1011,x1112,x121,x12,x23,x34,x45,x56)
-  // VALUES
-  // ('$evtStart','$roomko','#000000','$qty','$c_alldayv','$x67v','$x78v','$x89v','$x910v','$x1011v','$x1112v','$x121v','$x12v','$x23v','$x34v','$x45v','$x56v')
-  // ");
-  //   } else {
-
-  //     while ($rowE = mysql_fetch_row($resultE))
-  //       if ($rowE[1]) {
-  //       }
-
-
-  //     $query = mysql_query("UPDATE locationpo
-  //       SET
-  //       x67='$x67v',
-  //       x78='$x78v',
-  //       x89='$x89v',
-  //       x910='$x910v',
-  //       x1011='$x1011v',
-  //       x1112='$x1112v',
-  //       x121='$x121v',
-  //       x12='$x12v',
-  //       x23='$x23v',
-  //       x34='$x34v',
-  //       x45='$x45v',
-  //       x56='$x56v'
-
-  //     WHERE evt_start = '$evtStart' and evt_text = '$roomko'
-  //     ");
-  //   }
 }
 
+if(isset($_SESSION["username"], $_SESSION["password"])){
 ?>
 
 
@@ -367,7 +313,6 @@ if (isset($_POST['SubButton'])) {
 
 <body>
 
-
   <?php
   if (isset($_SESSION['successMessage'])) { ?>
     <script>
@@ -407,10 +352,28 @@ if (isset($_POST['SubButton'])) {
     <center>
       <img src="images/pcn.png" alt="" width="15%">
     </center>
+    <?php
+      $query = "SELECT * FROM user WHERE category = '". $_SESSION['category'] ."'";
+      $result = $connect->query($query);
+      $row = $result->fetch_assoc();
+
+      if($row['category'] === "ADMIN"){  
+                           
+    ?>
     <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
     <button type="button" class="gbutton btn btn-primary" data-toggle="modal" data-target="#myModal" style="float:right">Add Appointment</button> &nbsp;
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right">Add Room</button>
-
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right">Add Room</button>&nbsp;
+    <button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';">Logout</button>
+    
+    <?php 
+      }
+      else{
+    ?>
+    <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
+    <button type="button" class="gbutton btn btn-primary" data-toggle="modal" data-target="#myModal" style="float:right;">Add Appointment</button> &nbsp;
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right; display: none;">Add Room</button>&nbsp;
+    <button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';">Logout</button>
+    <?php }?>
 
 
   </div>
@@ -436,28 +399,64 @@ if (isset($_POST['SubButton'])) {
         <input type="text" name="evtRequestor" id="evtRequestor" disabled>
       </div>
 
-      <div class="evt100">
+      <div class="evt50">
         <label>Start Date</label>
         <input id="evtStart" name="evtStart" type="text" disabled onclick="fwriteme()">
       </div>
 
+      <div class="evt50">
+        <label for="">End Date</label>
+        <input type="text" name="evtEnd" id="evtEnd" disabled>
+      </div>
+
       <div class="evt100">
         <label for="">Time</label>
-        <input type="text" name="evtEnd" id="evtEnd" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd1" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd2" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd3" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd4" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd5" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd6" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd7" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd8" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd9" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd10" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd11" disabled>
+        <input type="text" name="evtEnd" class="inline-input" id="evtEnd12" disabled>
       </div>
 
       <div class="evt100">
         <input id="evtColor" type="color" value="#000000" style="display:none !important;">
       </div>
+
+      <?php
+      $query = "SELECT * FROM user WHERE category = '". $_SESSION['category'] ."'";
+      $result = $connect->query($query);
+      $row = $result->fetch_assoc();
+
+      if($row['category'] === "ADMIN"){  
+                           
+    ?>
       <div class="evt100">
         <label for="" class="form-label">Status</label>
-        <select name="evtBG" id="evtBG" class="form-control" aria-placeholder="select">
+        <select name="evtBG" id="evtBG" class="form-control" aria-placeholder="select" style="display: none;">
           <option value="#80c87e">Green (Approve)</option>
           <option value="#e0c23b">Yellow (Pending)</option>
           <option value="#f47171">Red (Rejected)</option>
         </select>
         </div>
-
+      <?php }
+      else{
+        ?>
+         <div class="evt100">
+        <label for="" class="form-label">Status</label>
+        <select name="evtBG" id="evtBG" class="form-control" aria-placeholder="select" disabled>
+          <option value="#80c87e">Green (Approve)</option>
+          <option value="#e0c23b">Yellow (Pending)</option>
+          <option value="#f47171">Red (Rejected)</option>
+        </select>
+        </div>
+        <?php }?>
       
 
       <div class="evt100">
@@ -466,13 +465,13 @@ if (isset($_POST['SubButton'])) {
       </div>
 
       <div class="evt100">
-        <label>Quantiy</label>
+        <label>Quantity</label>
         <input id="evtQuantity" type="text" disabled required>
       </div>
 
       <div class="evt100">
-        <label>Time</label>
-        <input id="evtTime" type="text" disabled required>
+        <label>Times</label>
+        <input id="evtTime" type="hidden" disabled required>
       </div>
 
       <div class="evt100">
@@ -496,12 +495,28 @@ if (isset($_POST['SubButton'])) {
       </div>
 
       
+      <?php
+      $query = "SELECT * FROM user WHERE category = '". $_SESSION['category'] ."'";
+      $result = $connect->query($query);
+      $row = $result->fetch_assoc();
 
+      if($row['category'] === "ADMIN"){  
+                           
+    ?>
       <div class="evt100">
         <input type="hidden" id="evtID">
-        <input class="btn btn-danger" type="submit" id="evtDel" name="evtDel" value="Delete">
-        <input class="btn btn-success" type="submit" id="evtSave" name="evtSave" value="Accept">
+        <input class="btn btn-danger" type="submit" id="evtDel" name="evtDel" value="Reject">
+        <input class="btn btn-success" type="submit" id="evtSave" name="evtSave" value="Approve">
       </div>
+      <?php }
+      else{
+      ?>
+      <div class="evt100">
+        <input type="hidden" id="evtID">
+        <input class="btn btn-danger" type="hidden" id="evtDel" name="evtDel" value="Delete" style="display: none !important;">
+        <input class="btn btn-success" type="submit" id="evtSave" name="evtSave" value="Accept" style="display: none;">
+      </div>
+      <?php }?>
 
     </form>
   </dialog>
@@ -1294,3 +1309,9 @@ if (isset($_POST['SubButton'])) {
 </script>
 
 </html>
+<?php
+} else { header("Location: ../index.php");
+  session_destroy();
+}
+mysqli_close($connect);
+?>
