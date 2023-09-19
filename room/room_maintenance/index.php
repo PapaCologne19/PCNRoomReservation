@@ -182,7 +182,7 @@ session_start();
 
                         <div class="mb-3">
                             <label for="">Description</label>
-                            <textarea name="description" id="description" class="form-control" cols="30" rows="10" required></textarea>
+                            <textarea name="description" id="description" class="form-control" maxlength="500" cols="30" rows="10" required></textarea>
                         </div>
 
                 </div>
@@ -225,7 +225,7 @@ session_start();
                             </div>
                             <div class="mb-3">
                                 <label for="">Description</label>
-                                <textarea class="form-control" name="updateDescription" id="updateDescription" cols="30" rows="10" required></textarea>
+                                <textarea class="form-control" name="updateDescription" maxlength="500" id="updateDescription" cols="30" rows="10" required></textarea>
                             </div>
                 </div>
                 <div class="modal-footer">

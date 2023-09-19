@@ -156,8 +156,9 @@ input[type="checkbox"]:disabled::after {
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 16px;
+  height: 70vh;
   text-align: center;
-  background-color: #f1f1f1;
+  background-color: white;
 }
 
 
@@ -273,4 +274,13 @@ element.style {
 
 .inline-input {
   display: inline !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    height: 65vh;
+  }
+  .loginButton{
+    width: 100%;
+  }
 }

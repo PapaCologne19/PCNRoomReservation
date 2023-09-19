@@ -50,11 +50,13 @@ var cal = {
     cal.hFormWrap = document.getElementById("calForm");
     cal.hForm = cal.hFormWrap.querySelector("form");
     cal.hfID = document.getElementById("evtID");
+    cal.hfCategory = document.getElementById("evtCategory");
     cal.hfRequestor = document.getElementById('evtRequestor');
     cal.hfStart = document.getElementById("evtStart");
 
     cal.hfEnd = document.getElementById("evtEnd");
-    
+    cal.hfEndAll = document.getElementById("evtEndAll");
+
     cal.hfEnd1 = document.getElementById("evtEnd1");
     cal.hfEnd2 = document.getElementById("evtEnd2");
     cal.hfEnd3 = document.getElementById("evtEnd3");
@@ -292,6 +294,16 @@ var cal = {
           rowB.className = "calRowEvt";
 
 
+          if (cal.hfCategory.value = cal.events[id]["category"] === "ADMIN") {
+            rowB.innerHTML = cal.events[id]["t"] + " - " + cal.events[id]["fullname"];
+           cal.events[id]["t"] + cal.events[id]["fullname"]; //Requestor's Name
+          } 
+          else if (cal.hfCategory.value = cal.events[id]["userCategory"] === "USER" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+            rowB.innerHTML = cal.events[id]["t"] + " - " + cal.events[id]["firstname"] + " " + cal.events[id]["lastname"];
+          } 
+          else {
+            rowB.style.display = "none";
+          }
 
 
 
@@ -351,7 +363,11 @@ var cal = {
 
 
 
-          rowB.innerHTML = cal.events[id]["t"] + " - " + cal.events[id]["firstname"] + cal.events[id]["lastname"];
+
+
+
+
+
 
 
 
@@ -372,11 +388,99 @@ var cal = {
   show: id => {
     if (id) {
       cal.hfID.value = id;
-      cal.hfRequestor.value = cal.events[id]["firstname"]+ " " + cal.events[id]["lastname"];
-      cal.hfStart.value = cal.events[id]["s"];
-      // cal.hfEnd.value = cal.events[id]["e"];
-      cal.hfQuantity.value = cal.events[id]["q"];
 
+
+      cal.hfStart.value = cal.events[id]["s"]; //Start Time
+      cal.hfEnd.value = cal.events[id]["e"]; //End Time
+      if (cal.hfCategory.value = cal.events[id]["category"] === "ADMIN") {
+        cal.hfRequestor.value = cal.events[id]["fullname"]; //Requestor's Name
+      } 
+      if (cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"] && cal.events[id]["category"] === "USER") {
+        cal.hfRequestor.value = cal.events[id]["firstname"] + " " + cal.events[id]["lastname"]; //Requestor's Name
+      }
+
+      // Time
+      if (cal.hfEnd1.value = cal.events[id]["x67"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd1.value = "6AM to 7AM";
+      } else {
+        cal.hfEnd1.value = "";
+      }
+      if (cal.hfEnd2.value = cal.events[id]["x78"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd2.value = "7AM to 8AM";
+      } else {
+        cal.hfEnd2.value = "";
+      }
+      if (cal.hfEnd3.value = cal.events[id]["x89"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd3.value = "8AM to 9AM";
+      } else {
+        cal.hfEnd3.value = "";
+      }
+      if (cal.hfEnd4.value = cal.events[id]["x910"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd4.value = "9AM to 10AM";
+      } else {
+        cal.hfEnd4.value = "";
+      }
+      if (cal.hfEnd5.value = cal.events[id]["x1011"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd5.value = "10AM to 11AM";
+      } else {
+        cal.hfEnd5.value = "";
+      }
+      if (cal.hfEnd6.value = cal.events[id]["x1112"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd6.value = "11AM to 12PM";
+      } else {
+        cal.hfEnd6.value = "";
+      }
+      if (cal.hfEnd7.value = cal.events[id]["x121"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd7.value = "12PM to 1PM";
+      } else {
+        cal.hfEnd7.value = "";
+      }
+      if (cal.hfEnd8.value = cal.events[id]["x12"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd8.value = "1PM to 2PM";
+      } else {
+        cal.hfEnd8.value = "";
+      }
+      if (cal.hfEnd9.value = cal.events[id]["x23"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd9.value = "2PM to 3PM";
+      } else {
+        cal.hfEnd9.value = "";
+      }
+      if (cal.hfEnd10.value = cal.events[id]["x34"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd10.value = "3PM to 4PM";
+      } else {
+        cal.hfEnd10.value = "";
+      }
+      if (cal.hfEnd11.value = cal.events[id]["x45"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd11.value = "4PM to 5PM";
+      } else {
+        cal.hfEnd11.value = "";
+      }
+      if (cal.hfEnd12.value = cal.events[id]["x56"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+        cal.hfEnd12.value = "5PM to 6PM";
+      } else {
+        cal.hfEnd12.value = "";
+      }
+      if (cal.events[id]["x67"] === "1" &&
+        cal.events[id]["x78"] === "1" &&
+        cal.events[id]["x89"] === "1" &&
+        cal.events[id]["x910"] === "1" &&
+        cal.events[id]["x1011"] === "1" &&
+        cal.events[id]["x1112"] === "1" &&
+        cal.events[id]["x121"] === "1" &&
+        cal.events[id]["x12"] === "1" &&
+        cal.events[id]["x23"] === "1" &&
+        cal.events[id]["x34"] === "1" &&
+        cal.events[id]["x45"] === "1" &&
+        cal.events[id]["x56"] === "1") {
+        cal.hfEndAll.value = "All Day";
+      } else {
+        cal.hfEndAll.value = "";
+      }
+
+
+      cal.hfTxt.value = cal.events[id]["t"]; // Room Name
+      cal.hfQuantity.value = cal.events[id]["q"]; //Quantity
+      // EQUIPMENTS
       // Projector
       if (cal.events[id]["projector"] === "1") {
         cal.hfProjector.value = "Projector";
@@ -423,99 +527,12 @@ var cal = {
         cal.hfCleanup.value = "";
       }
 
-
-      // Time
-      var firstName = cal.events[id]["firstname"];
-      var lastName = cal.events[id]["lastname"];
-      var fullName = firstName + lastName;
-
-      
-      
-      if (cal.hfEnd1.value = cal.events[id]["x67"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd1.value = "6AM to 7AM";
-      } else {
-        cal.hfEnd1.value = "";
-      }
-      if (cal.hfEnd2.value = cal.events[id]["x78"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd2.value = "7AM to 8AM";
-      } else {
-        cal.hfEnd2.value = "";
-      }
-      if (cal.hfEnd3.value = cal.events[id]["x89"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd3.value = "8AM to 9AM";
-      } else {
-        cal.hfEnd3.value = "";
-      }
-      if (cal.hfEnd4.value = cal.events[id]["x910"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd4.value = "9AM to 10AM";
-      } else {
-        cal.hfEnd4.value = "";
-      }
-      if (cal.hfEnd5.value = cal.events[id]["x1011"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd5.value = "10AM to 11AM";
-      } else {
-        cal.hfEnd5.value = "";
-      }
-      if (cal.hfEnd6.value = cal.events[id]["x1112"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd6.value = "11AM to 12PM";
-      } else {
-        cal.hfEnd6.value = "";
-      }
-      if (cal.hfEnd7.value = cal.events[id]["x121"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd7.value = "12PM to 1PM";
-      } else {
-        cal.hfEnd7.value = "";
-      }
-      if (cal.hfEnd8.value = cal.events[id]["x12"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd8.value = "1PM to 2PM";
-      } else {
-        cal.hfEnd8.value = "";
-      }
-      if (cal.hfEnd9.value = cal.events[id]["x23"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd9.value = "2PM to 3PM";
-      } else {
-        cal.hfEnd9.value = "";
-      }
-      if (cal.hfEnd10.value = cal.events[id]["x34"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd10.value = "3PM to 4PM";
-      } else {
-        cal.hfEnd10.value = "";
-      }
-      if (cal.hfEnd11.value = cal.events[id]["x45"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd11.value = "4PM to 5PM";
-      } else {
-        cal.hfEnd11.value = "";
-      }
-      if (cal.hfEnd12.value = cal.events[id]["x56"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd12.value = "5PM to 6PM";
-      } else {
-        cal.hfEnd12.value = "";
-      }
-
-      if (cal.events[id]["x67"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
-        cal.events[id]["x78"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
-        cal.events[id]["x89"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
-        cal.events[id]["x910"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
-        cal.events[id]["x1011"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
-        cal.events[id]["x1112"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
-        cal.events[id]["x121"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
-        cal.events[id]["x12"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
-        cal.events[id]["x23"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
-        cal.events[id]["x34"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
-        cal.events[id]["x45"] === cal.events[id]["firstname"] + cal.events[id]["lastname"] &&
-        cal.events[id]["x56"] === cal.events[id]["firstname"] + cal.events[id]["lastname"]) {
-        cal.hfEnd.value = "All Day";
-      } else {
-        cal.hfEnd.value = "";
-      }
-
-
-      cal.hfRoomOrientation.value = cal.events[id]["room_orientation"];
-      cal.hfEnd.value = cal.events[id]["e"];
-      cal.hfTxt.value = cal.events[id]["t"];
+      cal.hfRoomOrientation.value = cal.events[id]["room_orientation"]; //Room Orientation
+      cal.hfCategory.value = cal.events[id]["userCategory"];
       cal.hfColor.value = cal.events[id]["c"];
       cal.hfBG.value = cal.events[id]["b"];
       cal.hfDel.style.display = "inline-block";
+
     } else {
       cal.hForm.reset();
       cal.hfID.value = "";
@@ -543,7 +560,7 @@ var cal = {
     if (cal.hfID.value != "") {
       data.id = cal.hfID.value;
     }
-  
+
     // (H2) Create a confirmation SweetAlert dialog
     Swal.fire({
       title: 'Confirm Save',
@@ -578,10 +595,10 @@ var cal = {
         });
       }
     });
-  
+
     return false;
   },
-  
+
 
 
   // (I) DELETE EVENT
@@ -593,7 +610,7 @@ var cal = {
     if (cal.hfID.value != "") {
       data.id = cal.hfID.value;
     }
-  
+
     // Define custom CSS class for the SweetAlert dialog
     const customClass = {
       container: 'custom-swal-container',
@@ -606,7 +623,7 @@ var cal = {
       confirmButton: 'custom-swal-confirmButton',
       cancelButton: 'custom-swal-cancelButton',
     };
-  
+
     // Display a SweetAlert confirmation dialog with custom size
     Swal.fire({
       title: 'Are you sure?',
@@ -634,10 +651,10 @@ var cal = {
         });
       }
     });
-  
+
     return false;
   }
-  
+
 
 
 

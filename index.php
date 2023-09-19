@@ -6,12 +6,13 @@ if (isset($_POST['login-submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM user WHERE username = '$username' AND category = '1'";
+    $query = "SELECT * FROM user WHERE username = '$username'";
     $result = $connect->query($query);
 
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
 
+        $_SESSION["id"] = $row['id'];
         $_SESSION["username"] = $row['username'];
         $_SESSION["password"] = $row['password'];
         $_SESSION["firstname"] = $row['firstname'];
@@ -28,25 +29,6 @@ if (isset($_POST['login-submit'])) {
     } else {
         echo "Wrong Credentials";
         echo "<script>$('#myModalroom').modal('show');</script>";
-
-        echo "<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-        ";
     }
 }
 

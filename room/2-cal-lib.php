@@ -43,7 +43,7 @@ class Calendar
   // (D) SAVE EVENT
   function save($start, $end, $txt, $color, $bg , $id = null)
   {
-      $bg = "#80c87e";
+      $bg = "#009900";
 
     // (D2) RUN SQL
     if ($id === null) {
@@ -69,7 +69,7 @@ class Calendar
   // (E) DELETE EVENT
   function del($bg, $id)
   {
-    $bg = "#f47171";
+    $bg = "#ff0000";
 
     if ($id != null) {
       $sql = "UPDATE `events` SET `evt_bg`= ?  
@@ -95,6 +95,9 @@ class Calendar
     $end = $dateYM . $daysInMonth . " 23:59:59";
     $firstname = $_SESSION['firstname'];
     $lastname = $_SESSION['lastname'];
+    $user_id = $_SESSION['id'];
+    $username = $_SESSION['username'];
+    $category = $_SESSION['category'];
     // (F2) GET EVENTS
     // s & e : start & end date
     // c & b : text & background color
@@ -112,7 +115,7 @@ class Calendar
     while ($r = $this->stmt->fetch()) {
       $events[$r["evt_id"]] = [
         "s" => $r["evt_start"], "e" => $r["evt_end"],
-        "c" => $r["evt_color"], "b" => $r["evt_bg"],
+        "c" => $r["evt_color"], "b" => $r["evt_bg"], 
         "t" => $r["evt_text"], "q" => $r["qty"], "time" => $r["allday"],
         "projector" => $r["projector"], "whiteboard" => $r["whiteboard"],
         "ext_cord" => $r["ext_cord"], "sound" => $r["sound"],
@@ -121,8 +124,11 @@ class Calendar
         "cleanup_before" => $r["cleanup_before"], "cleanup_after" => $r["cleanup_after"],
         "room_orientation" => $r["room_orientation"],
 
-        "x67" => $r["x67"], "x78" => $r["x78"], "x89" => $r["x89"], "x910" => $r["x910"], "x1011" => $r["x1011"], "x1112" => $r["x1112"], "x121" => $r["x121"], "x12" => $r["x12"], "x23" => $r["x23"], "x34" => $r["x34"], "x45" => $r["x45"], "x56" => $r["x56"],
-        "firstname" => $firstname, "lastname" => $lastname
+        "x67" => $r["x67"], "x78" => $r["x78"], "x89" => $r["x89"], "x910" => $r["x910"], 
+        "x1011" => $r["x1011"], "x1112" => $r["x1112"], "x121" => $r["x121"], "x12" => $r["x12"], 
+        "x23" => $r["x23"], "x34" => $r["x34"], "x45" => $r["x45"], "x56" => $r["x56"],
+        "firstname" => $firstname, "lastname" => $lastname, "userCategory" => $r['user_category'], "userID" => $r["user_id"],
+        "category" => $category, "username" => $username, "userIDSESSION" => $user_id, "fullname" => $r["fullName"],
         
        ];
     }

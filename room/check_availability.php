@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Assuming you have columns like 'x67', 'x78', etc. for time slots
             for ($i = 1; $i <= 1112; $i++) {
                 $timeSlotColumn = 'x' . $i; // Adjust to match your column names
-                if (isset($row[$timeSlotColumn]) && $row[$timeSlotColumn] == "Deo Villavicencio") {
+                if (isset($row[$timeSlotColumn]) && $row[$timeSlotColumn] == "1") {
                     // This time slot is booked
                     $unavailableTimes[] = $timeSlotColumn;
                     

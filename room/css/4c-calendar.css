@@ -98,7 +98,9 @@ body {
   margin-right: 5px;
   font-size: 12px;
   font-weight: 500;
-  color: white !important;
+  color: black !important;
+  letter-spacing: 2px;
+  text-shadow: 1px 0px 1px black;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -191,7 +193,7 @@ body {
 }
 
 .calToday {
-  background: #feffd3;
+  background: #f8def8;
 }
 
 /* (D) EVENT FORM */
