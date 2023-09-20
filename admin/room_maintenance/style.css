@@ -11,3 +11,7 @@ html, body{
     background-color: #B31312;
     color: #ffff;
 }
+
+link.active{
+    color: #B31312 !important;
+}

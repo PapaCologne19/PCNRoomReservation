@@ -1,9 +1,9 @@
 <?php
 
-include '../connect.php';
+include '../../room/connect.php';
 session_start();
 
-
+if (isset($_SESSION["username"], $_SESSION["password"])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,9 +75,9 @@ session_start();
         <div class="container">
 
             <div class="button">
-                <button type="button" class="btn btn-outline-info my-4 float-end addRooms">Add Rooms</button>
+                <button type="button" class="btn btn-outline-info btn-sm my-4 float-end addRooms">Add Rooms</button>
             </div>
-            <table class="table p-3 bg-info bg-opacity-10 border border-info border-start-0 border-end-0 rounded-end mdc-data-table" id="roomTable">
+            <table class="table p-3 table-sm align-middle mb-0 p-3 bg-info bg-opacity-10 border border-info border-start-0 border-end-0 rounded-end mdc-data-table" id="roomTable">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -109,10 +109,10 @@ session_start();
                             <td><?php echo $row['timestamp']; ?></td>
                             <td>
                                 <input type="hidden" class="updateID" name="updateID" id="updateID" value="<?php echo $row['id'] ?>">
-                                <button type="button" class="btn updateButton button" name="updateButton" id="updateButton">Update</button>
+                                <button type="button" class="btn btn-sm updateButton button" name="updateButton" id="updateButton">Update</button>
                             <td>
                                 <input type="hidden" class="deleteID" name="deleteID" id="deleteID" value="<?php echo $row['id'] ?>">
-                                <button type="button" class="btn deleteButton" name="deleteButton" id="deleteButton">Delete</button>
+                                <button type="button" class="btn btn-sm deleteButton" name="deleteButton" id="deleteButton">Delete</button>
                             </td>
                         </tr>
 
@@ -330,3 +330,10 @@ session_start();
 </body>
 
 </html>
+<?php
+} else {
+  header("Location: ../../index.php");
+  session_destroy();
+}
+mysqli_close($connect);
+?>

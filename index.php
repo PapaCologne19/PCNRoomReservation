@@ -3,8 +3,8 @@ include 'room/connect.php';
 session_start();
 
 if (isset($_POST['login-submit'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = mysqli_real_escape_string($connect, $_POST['username']);
+    $password = mysqli_real_escape_string($connect, $_POST['password']);
 
     $query = "SELECT * FROM user WHERE username = '$username'";
     $result = $connect->query($query);
@@ -22,12 +22,20 @@ if (isset($_POST['login-submit'])) {
         $hashedPassword = $row['password'];
         if (password_verify($password, $hashedPassword)) {
 
-            header("Location: room/index.php");
+            if ($row["status"] === "1" && $row["category"] === "USER") {
+                header("Location: room/index.php");
+            } elseif($row['status'] === "0" && $row["category"] === "ADMIN"){
+                header("Location: room/index.php");
+            } elseif($row["status"] === "2" && $row["category"] === "USER"){
+                $_SESSION["error"] =  "Your account has been rejected. Contact Mr. Deo or Mr. Mike for more info. Thank you.";
+            } else{
+                $_SESSION["warning"] =  "Please contact Mr. Deo or Mr. Mike for account approval. Thank you";
+            }
         } else {
-            echo "Wrong Credentials";
+            $_SESSION["error"] = "Hacker ka 'no? Huwag kami!🤬";
         }
     } else {
-        echo "Wrong Credentials";
+        $_SESSION["error"] = "Hacker ka 'no? Huwag kami!🤬";
         echo "<script>$('#myModalroom').modal('show');</script>";
     }
 }
@@ -47,6 +55,9 @@ if (isset($_POST['login-submit'])) {
     <script src="room/strap/jquery.min.js"></script>
     <script src="room/strap/bootstrap.min.js"></script>
 
+    <!-- Sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
@@ -56,19 +67,52 @@ if (isset($_POST['login-submit'])) {
 </head>
 
 <body>
+        <?php
+        if (isset($_SESSION['success'])) { ?>
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: "<?php echo $_SESSION['success']; ?>",
+                })
+            </script>
+        <?php unset($_SESSION['success']);
+        } 
+        ?>
+         <?php
+        if (isset($_SESSION['error'])) { ?>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: "<?php echo $_SESSION['error']; ?>",
+                })
+            </script>
+        <?php unset($_SESSION['error']);
+        } 
+        ?>
+        <?php
+        if (isset($_SESSION['warning'])) { ?>
+            <script>
+                Swal.fire({
+                    icon: 'warning',
+                    title: "<?php echo $_SESSION['warning']; ?>",
+                })
+            </script>
+        <?php unset($_SESSION['warning']);
+        } 
+        ?>
     <center>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="panel panel-login">
-                        <div class="panel-heading">
+                        <div class="panel-heading pt-3">
                             <img src="room/images/pcn.png" alt="PCN LOGO" class="img-responsive" width="15%">
-                            <div class="panel-title text-center">Login</div>
+                            <div class="panel-title text-center" style="font-weight: 900; font-family: 'Roboto', sans-serif; font-size: 50px;">LOGIN</div>
                             <hr>
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 forms">
                                     <form id="login-form" class="col-lg-offset-1 col-lg-10" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" role="form" style="display: block;">
                                         <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -98,7 +142,7 @@ if (isset($_POST['login-submit'])) {
 
     <!-- Modal -->
     <!-- Modal -->
-    
+
 
 </body>
 

@@ -81,12 +81,8 @@ var cal = {
     cal.hfWhiteboard = document.getElementById("evtWhiteboard");
     cal.hfExtCord = document.getElementById("evtExtCord");
     cal.hfSound = document.getElementById("evtSound");
-    cal.hfSoundSimple = document.getElementById("evtSoundSimple");
-    cal.hfSoundAdvance = document.getElementById("evtSoundAdvance");
     cal.hfBasicLights = document.getElementById("evtBasicLights");
     cal.hfCleanup = document.getElementById("evtCleanup");
-    cal.hfCleanupBefore = document.getElementById("evtCleanupBefore");
-    cal.hfCleanupAfter = document.getElementById("evtCleanupAfter");
 
     // time
     cal.hfAllday = document.getElementById("evtTime");
@@ -99,7 +95,11 @@ var cal = {
     document.getElementById("calNext").onclick = () => cal.pshift(1);
     document.getElementById("calAdd").onclick = () => cal.show();
     cal.hForm.onsubmit = () => cal.save();
-    document.getElementById("evtCX").onclick = () => cal.hFormWrap.close();
+    // document.getElementById("evtCX").onclick = () => cal.hFormWrap.close();
+    document.getElementById("evtCX").onclick = () => {
+      cal.hFormWrap.close();
+      location.reload();
+    };
     cal.hfDel.onclick = cal.del;
 
     // (C3) DRAW DAY NAMES
@@ -294,81 +294,81 @@ var cal = {
           rowB.className = "calRowEvt";
 
 
-          if (cal.hfCategory.value = cal.events[id]["category"] === "ADMIN") {
-            rowB.innerHTML = cal.events[id]["t"] + " - " + cal.events[id]["fullname"];
-           cal.events[id]["t"] + cal.events[id]["fullname"]; //Requestor's Name
-          } 
-          else if (cal.hfCategory.value = cal.events[id]["userCategory"] === "USER" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
-            rowB.innerHTML = cal.events[id]["t"] + " - " + cal.events[id]["firstname"] + " " + cal.events[id]["lastname"];
-          } 
-          else {
-            rowB.style.display = "none";
-          }
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-          var eventData = cal.events[id]; // Replace 'id' with the actual event ID
-
-          // Replace the hard-coded key "x56" with the event-specific key
-          var eventTimeKey = "x56"; // Replace this with the actual key from your event data
-
-          // Sample raw time data in your PHP array
-          var rawTimeData = {
-            "x67": "6am to 7am",
-            "x78": "7am to 8am",
-            "x89": "8am to 9am",
-            "x910": "9am to 10am",
-            "x1011": "10am to 11am",
-            "x1112": "11am to 12pm",
-            "x121": "12pm to 1pm",
-            "x12": "1pm to 2pm",
-            "x23": "2pm to 3pm",
-            "x34": "3pm to 4pm",
-            "x45": "4pm to 5pm",
-            "x56": "5pm to 6pm"
+          // Assuming you have fetched the data from PHP and stored it in cal.events[id]
+          const selectedColumns = ["x67", "x78", "x89", "x910", "x1011", "x1112", "x121", "x12", "x23", "x34", "x45", "x56"];
+          const timeSlotMapping = {
+            "x67": "6am - 7am",
+            "x78": "7am - 8am",
+            "x89": "8am - 9am",
+            "x910": "9am - 10am",
+            "x1011": "10am - 11am",
+            "x1112": "11am - 12pm",
+            "x121": "12pm - 1pm",
+            "x12": "1pm - 2pm",
+            "x23": "2pm - 3pm",
+            "x34": "3pm - 4pm",
+            "x45": "4pm - 5pm",
+            "x56": "5pm - 6pm",
           };
 
-          // Convert and format the time data for the event-specific key
-          var rawTime = rawTimeData[eventTimeKey];
+          // Initialize an array to store selected time slots
+          const selectedTimeSlots = [];
 
-          var times = rawTime.split(" to ");
-          var startTime = times[0];
-          var endTime = times[1];
+          // Iterate through the selected columns and check their values
+          for (const column of selectedColumns) {
+            const columnValue = cal.events[id][column];
+            const mappedTimeSlot = timeSlotMapping[column];
 
-          // You can format the time as needed, for example:
-          // 6am to 7am => 06:00 AM - 07:00 AM
-          // Format hours and minutes as needed
-          var formattedStartTime = startTime.replace("am", "AM").replace("pm", "PM");
-          var formattedEndTime = endTime.replace("am", "AM").replace("pm", "PM");
+            // Check if the column value is "1" or 1 (use == for type coercion)
+            if (columnValue == "1" && mappedTimeSlot) {
+              // Check if the time slot is not already in the array
+              if (!selectedTimeSlots.includes(mappedTimeSlot)) {
+                selectedTimeSlots.push(mappedTimeSlot);
+              }
+            }
+          }
 
-          // Create a formatted time string
-          var formattedTime = formattedStartTime + " - " + formattedEndTime;
+          // Merge adjacent time slots into a single time range
+          const mergedTimeRanges = [];
+          let currentRange = "";
 
-          // rowB.innerHTML = cal.events[id]["t"] + " - " + formattedTime;
+          for (const timeSlot of selectedTimeSlots) {
+            if (currentRange === "") {
+              currentRange = timeSlot;
+            } else {
+              const previousEndTime = currentRange.split(" - ")[1];
+              const currentTimeSlotStart = timeSlot.split(" - ")[0];
 
+              if (previousEndTime === currentTimeSlotStart) {
+                currentRange = currentRange.split(" - ")[0] + " - " + timeSlot.split(" - ")[1];
+              } else {
+                mergedTimeRanges.push(currentRange);
+                currentRange = timeSlot;
+              }
+            }
+          }
 
+          // Add the last time range to the mergedTimeRanges array
+          if (currentRange !== "") {
+            mergedTimeRanges.push(currentRange);
+          }
 
+          // Join the merged time ranges with " - " separator
+          const formattedTimeSlots = mergedTimeRanges.join(" - ");
 
-
-
-
-
-
-
-
+          if (cal.hfCategory.value = cal.events[id]["category"] === "ADMIN") {
+            rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
+            cal.events[id]["t"] + cal.events[id]["fullname"]; //Requestor's Name
+          } else if (cal.hfCategory.value = cal.events[id]["userCategory"] === "USER" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+            rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
+          } else {
+            rowB.style.display = "none";
+          }
 
 
           rowB.style.color = cal.events[id]["c"];
@@ -392,73 +392,74 @@ var cal = {
 
       cal.hfStart.value = cal.events[id]["s"]; //Start Time
       cal.hfEnd.value = cal.events[id]["e"]; //End Time
+
       if (cal.hfCategory.value = cal.events[id]["category"] === "ADMIN") {
         cal.hfRequestor.value = cal.events[id]["fullname"]; //Requestor's Name
-      } 
+      }
       if (cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"] && cal.events[id]["category"] === "USER") {
         cal.hfRequestor.value = cal.events[id]["firstname"] + " " + cal.events[id]["lastname"]; //Requestor's Name
       }
 
       // Time
-      if (cal.hfEnd1.value = cal.events[id]["x67"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x67"] === "1") {
         cal.hfEnd1.value = "6AM to 7AM";
       } else {
-        cal.hfEnd1.value = "";
+        cal.hfEnd1.style.display = "none";
       }
-      if (cal.hfEnd2.value = cal.events[id]["x78"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x78"] === "1") {
         cal.hfEnd2.value = "7AM to 8AM";
       } else {
-        cal.hfEnd2.value = "";
+        cal.hfEnd2.style.display = "none";
       }
-      if (cal.hfEnd3.value = cal.events[id]["x89"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x89"] === "1") {
         cal.hfEnd3.value = "8AM to 9AM";
       } else {
-        cal.hfEnd3.value = "";
+        cal.hfEnd3.style.display = "none";
       }
-      if (cal.hfEnd4.value = cal.events[id]["x910"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x910"] === "1") {
         cal.hfEnd4.value = "9AM to 10AM";
       } else {
-        cal.hfEnd4.value = "";
+        cal.hfEnd4.style.display = "none";
       }
-      if (cal.hfEnd5.value = cal.events[id]["x1011"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x1011"] === "1") {
         cal.hfEnd5.value = "10AM to 11AM";
       } else {
-        cal.hfEnd5.value = "";
+        cal.hfEnd5.style.display = "none";
       }
-      if (cal.hfEnd6.value = cal.events[id]["x1112"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x1112"] === "1") {
         cal.hfEnd6.value = "11AM to 12PM";
       } else {
-        cal.hfEnd6.value = "";
+        cal.hfEnd6.style.display = "none";
       }
-      if (cal.hfEnd7.value = cal.events[id]["x121"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x121"] === "1") {
         cal.hfEnd7.value = "12PM to 1PM";
       } else {
-        cal.hfEnd7.value = "";
+        cal.hfEnd7.style.display = "none";
       }
-      if (cal.hfEnd8.value = cal.events[id]["x12"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x12"] === "1") {
         cal.hfEnd8.value = "1PM to 2PM";
       } else {
-        cal.hfEnd8.value = "";
+        cal.hfEnd8.style.display = "none";
       }
-      if (cal.hfEnd9.value = cal.events[id]["x23"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x23"] === "1") {
         cal.hfEnd9.value = "2PM to 3PM";
       } else {
-        cal.hfEnd9.value = "";
+        cal.hfEnd9.style.display = "none";
       }
-      if (cal.hfEnd10.value = cal.events[id]["x34"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x34"] === "1") {
         cal.hfEnd10.value = "3PM to 4PM";
       } else {
-        cal.hfEnd10.value = "";
+        cal.hfEnd10.style.display = "none";
       }
-      if (cal.hfEnd11.value = cal.events[id]["x45"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x45"] === "1") {
         cal.hfEnd11.value = "4PM to 5PM";
       } else {
-        cal.hfEnd11.value = "";
+        cal.hfEnd11.style.display = "none";
       }
-      if (cal.hfEnd12.value = cal.events[id]["x56"] === "1" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+      if (cal.events[id]["x56"] === "1") {
         cal.hfEnd12.value = "5PM to 6PM";
       } else {
-        cal.hfEnd12.value = "";
+        cal.hfEnd12.style.display = "none";
       }
       if (cal.events[id]["x67"] === "1" &&
         cal.events[id]["x78"] === "1" &&
@@ -474,32 +475,33 @@ var cal = {
         cal.events[id]["x56"] === "1") {
         cal.hfEndAll.value = "All Day";
       } else {
-        cal.hfEndAll.value = "";
+        cal.hfEndAll.style.display = "none";
       }
 
 
       cal.hfTxt.value = cal.events[id]["t"]; // Room Name
       cal.hfQuantity.value = cal.events[id]["q"]; //Quantity
+      
       // EQUIPMENTS
       // Projector
       if (cal.events[id]["projector"] === "1") {
         cal.hfProjector.value = "Projector";
       } else {
-        cal.hfProjector.value = "";
+        cal.hfProjector.style.display = "none";
       }
 
       // Whiteboard
       if (cal.events[id]["whiteboard"] === "1") {
         cal.hfWhiteboard.value = "Whiteboard";
       } else {
-        cal.hfWhiteboard.value = "";
+        cal.hfWhiteboard.style.display = "none";
       }
 
       // Extension Cord
       if (cal.events[id]["ext_cord"] === "1") {
         cal.hfExtCord.value = "Extension Cord";
       } else {
-        cal.hfExtCord.value = "";
+        cal.hfExtCord.style.display = "none";
       }
 
       // Sound
@@ -508,14 +510,14 @@ var cal = {
       } else if (cal.events[id]["sound"] === "sound" && cal.events[id]["sound_advance"] === "1") {
         cal.hfSound.value = "Sound (Advance)";
       } else {
-        cal.hfSound.value = "";
+        cal.hfSound.style.display = "none";
       }
 
       // Basic Lights
       if (cal.events[id]["basic_lights"] === "1") {
         cal.hfBasicLights.value = "Basic Lights";
       } else {
-        cal.hfBasicLights.value = "";
+        cal.hfBasicLights.style.display = "none";
       }
 
       // Cleanup
@@ -524,7 +526,7 @@ var cal = {
       } else if (cal.events[id]["cleanup"] === "cleanup" && cal.events[id]["cleanup_after"] === "1") {
         cal.hfCleanup.value = "Cleanup (After)";
       } else {
-        cal.hfCleanup.value = "";
+        cal.hfCleanup.style.display = "none";
       }
 
       cal.hfRoomOrientation.value = cal.events[id]["room_orientation"]; //Room Orientation

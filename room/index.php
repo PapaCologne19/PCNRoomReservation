@@ -315,8 +315,6 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
   <body>
 
     <?php
-    echo $_SESSION["id"];
-    echo $_SESSION["username"];
     if (isset($_SESSION['successMessage'])) { ?>
       <script>
         Swal.fire({
@@ -414,19 +412,19 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
         <div class="evt100">
           <label for="">Time</label>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEndAll" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd1" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd2" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd3" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd4" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd5" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd6" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd7" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd8" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd9" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd10" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd11" disabled>
-          <input type="text" name="evtEnd" class="inline-input" id="evtEnd12" disabled>
+          <input type="text" name="evtEndAll" id="evtEndAll" disabled>
+          <input type="text" name="evtEnd1" id="evtEnd1" disabled>
+          <input type="text" name="evtEnd2" id="evtEnd2" disabled>
+          <input type="text" name="evtEnd3" id="evtEnd3" disabled>
+          <input type="text" name="evtEnd4" id="evtEnd4" disabled>
+          <input type="text" name="evtEnd5" id="evtEnd5" disabled>
+          <input type="text" name="evtEnd6" id="evtEnd6" disabled>
+          <input type="text" name="evtEnd7" id="evtEnd7" disabled>
+          <input type="text" name="evtEnd8" id="evtEnd8" disabled>
+          <input type="text" name="evtEnd9" id="evtEnd9" disabled>
+          <input type="text" name="evtEnd10" id="evtEnd10" disabled>
+          <input type="text" name="evtEnd11" id="evtEnd11" disabled>
+          <input type="text" name="evtEnd12" id="evtEnd12" disabled>
         </div>
 
         <div class="evt100">
@@ -477,19 +475,14 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
           <input id="evtTime" type="hidden" disabled required>
         </div>
 
-        <div class="evt100">
+        <div class="evt100 col-lg-3">
           <label>Equipment/s</label>
           <input type="text" name="evtProjector" id="evtProjector" disabled>
           <input type="text" name="evtWhiteboard" id="evtWhiteboard" disabled>
           <input type="text" name="evtExtCord" id="evtExtCord" disabled>
           <input type="text" name="evtSound" id="evtSound" disabled>
-          <input type="text" name="evtSoundSimple" id="evtSoundSimple" disabled>
-          <input type="text" name="evtSoundAdvance" id="evtSoundAdvance" disabled>
           <input type="text" name="evtBasicLights" id="evtBasicLights" disabled>
           <input type="text" name="evtCleanup" id="evtCleanup" disabled>
-          <input type="text" name="evtCleanupBefore" id="evtCleanupBefore" disabled>
-          <input type="text" name="evtCleanupAfter" id="evtCleanupAfter" disabled>
-
         </div>
 
         <div class="evt100">

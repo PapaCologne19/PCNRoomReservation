@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 08, 2023 at 07:32 AM
+-- Generation Time: Sep 20, 2023 at 09:24 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -48,7 +48,7 @@ CREATE TABLE `events` (
   `cleanup_after` varchar(255) NOT NULL,
   `others` varchar(255) NOT NULL,
   `others1` varchar(255) NOT NULL,
-  `allday` varchar(255) NOT NULL,
+  `allday` varchar(3) NOT NULL,
   `x67` varchar(255) NOT NULL,
   `x78` varchar(255) NOT NULL,
   `x89` varchar(255) NOT NULL,
@@ -62,19 +62,23 @@ CREATE TABLE `events` (
   `x45` varchar(255) NOT NULL,
   `x56` varchar(255) NOT NULL,
   `room_orientation` varchar(255) NOT NULL,
-  `status` varchar(15) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `fullName` varchar(255) NOT NULL,
+  `user_category` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `events`
 --
 
-INSERT INTO `events` (`evt_id`, `evt_start`, `evt_end`, `evt_text`, `evt_color`, `evt_bg`, `qty`, `projector`, `whiteboard`, `ext_cord`, `sound`, `sound_simple`, `sound_advance`, `basic_lights`, `cleanup`, `cleanup_before`, `cleanup_after`, `others`, `others1`, `allday`, `x67`, `x78`, `x89`, `x910`, `x1011`, `x1112`, `x121`, `x12`, `x23`, `x34`, `x45`, `x56`, `room_orientation`, `status`) VALUES
-(1, '2023-09-08', '2023-09-08 00:00:00', 'boardroom', '#000000', '#fbff00', '3', '1', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', 'others', '', 'x', 'Deo Villavicencio', 'Deo Villavicencio', 'Deo Villavicencio', '', '', '', '', '', '', '', '', '', 'Workshop', 'pending'),
-(3, '2023-09-08', '2023-09-08 00:00:00', 'boardroom', '#000000', '#fbff00', '2', '1', '1', '1', 'sound', '1', '0', '1', 'cleanup', '1', '0', 'others', '', 'x', '', '', '', '', '', '', '', 'Deo Villavicencio', 'Deo Villavicencio', '', '', '', 'Classroom', 'pending'),
-(5, '2023-09-09', '2023-09-09 00:00:00', 'boardroom', '#000000', '#fbff00', '2', '0', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', 'others', '', 'x', 'Deo Villavicencio', 'Deo Villavicencio', '', '', '', '', '', '', '', '', '', '', 'Training', 'pending'),
-(6, '2023-09-09', '2023-09-09 00:00:00', 'boardroom', '#000000', '#fbff00', '2', '0', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', 'others', '', 'x', '', '', 'Deo Villavicencio', 'Deo Villavicencio', '', '', '', '', '', '', '', '', 'Training', 'pending'),
-(9, '2023-09-10', '2023-09-10 00:00:00', 'boardroom', '#000000', '#fbff00', '2', '0', '0', '1', 'sound', '1', '0', '0', 'cleanup', '0', '0', 'others', '', 'x', 'Deo Villavicencio', 'Deo Villavicencio', '', '', '', '', '', '', '', '', '', '', 'Training', 'pending');
+INSERT INTO `events` (`evt_id`, `evt_start`, `evt_end`, `evt_text`, `evt_color`, `evt_bg`, `qty`, `projector`, `whiteboard`, `ext_cord`, `sound`, `sound_simple`, `sound_advance`, `basic_lights`, `cleanup`, `cleanup_before`, `cleanup_after`, `others`, `others1`, `allday`, `x67`, `x78`, `x89`, `x910`, `x1011`, `x1112`, `x121`, `x12`, `x23`, `x34`, `x45`, `x56`, `room_orientation`, `user_id`, `fullName`, `user_category`) VALUES
+(1, '2023-09-19', '2023-09-19 00:00:00', 'BOARD', '#000000', '#ff0000', '12', '1', '1', '1', 'sound', '0', '1', '0', 'cleanup', '0', '0', 'others', '', '', '1', '1', '1', '1', '1', '', '', '', '', '', '', '', 'Open', 1, 'JAMES PHILIP GOMERA', 'USER'),
+(2, '2023-09-20', '2023-09-20 00:00:00', 'BOARD', '#000000', '#009900', '6', '1', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', 'others', '', '', '1', '1', '1', '1', '1', '1', '', '', '', '', '', '', 'Training', 1, 'JAMES PHILIP GOMERA', 'USER'),
+(3, '2023-09-19', '2023-09-19 00:00:00', 'BOARD', '#000000', '#ffff00', '6', '1', '0', '1', 'sound', '1', '0', '0', 'cleanup', '0', '0', 'others', '', '', '', '', '', '', '', '1', '1', '1', '1', '1', '1', '', 'Workshop', 3, 'John Doe', 'USER'),
+(4, '2023-09-20', '2023-09-20 00:00:00', 'BOARD', '#000000', '#ff0000', '6', '0', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', 'others', '', '', '', '', '', '', '', '', '1', '1', '1', '1', '1', '', 'Classroom', 3, 'John Doe', 'USER'),
+(11, '2023-09-21', '2023-09-21 00:00:00', 'BOARD', '#000000', '#ffff00', '5', '1', '1', '1', 'sound', '0', '1', '0', 'cleanup', '1', '0', 'others', '', '', '1', '1', '1', '1', '1', '1', '', '', '', '', '', '', 'Open', 3, 'John Doe', 'USER'),
+(12, '2023-09-21', '2023-09-21 00:00:00', 'BOARD', '#000000', '#ffff00', '12', '1', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', 'others', '', '', '', '', '', '', '', '', '1', '1', '1', '1', '1', '1', 'Training', 1, 'JAMES PHILIP GOMERA', 'USER'),
+(13, '2023-09-20', '2023-09-20 00:00:00', 'ANNEX 1', '#000000', '#ffff00', '5', '0', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', 'others', '', '', '1', '1', '1', '1', '', '', '', '', '', '', '', '', 'Open', 1, 'JAMES PHILIP GOMERA', 'USER');
 
 -- --------------------------------------------------------
 
@@ -121,20 +125,62 @@ CREATE TABLE `rooms` (
   `id` int(11) NOT NULL,
   `rooms` varchar(255) NOT NULL,
   `capacity` varchar(255) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `image` varchar(255) NOT NULL,
+  `description` varchar(3000) NOT NULL,
+  `active` tinyint(2) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rooms`
 --
 
-INSERT INTO `rooms` (`id`, `rooms`, `capacity`, `timestamp`) VALUES
-(1, 'MANILA', '', '2023-07-10 03:29:48'),
-(2, 'BOARDROOM', '', '2023-07-10 03:29:48'),
-(3, 'ANNEX 1', '', '2023-07-10 03:30:03'),
-(4, 'ANNEX 2', '', '2023-07-10 03:30:18'),
-(5, 'ANNEX 1 & 2', '', '2023-07-10 03:30:18'),
-(6, 'ANNEX MINIROOM', '', '2023-07-10 03:30:18');
+INSERT INTO `rooms` (`id`, `rooms`, `capacity`, `image`, `description`, `active`, `timestamp`, `date_update`) VALUES
+(33, 'BOARD', '10', 'boardroom.jpg', 'Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board Room Board', 0, '2023-09-19 06:23:02', '2023-09-19 06:23:02'),
+(34, 'ANNEX 1', '10', 'troom1.jpg', 'Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Annex 1 Anne', 0, '2023-09-19 06:24:22', '2023-09-19 06:24:22'),
+(35, 'ANNEX 2', '10', 'troom2.jpg', 'Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Annex 2 Anne', 0, '2023-09-19 06:24:46', '2023-09-19 06:24:46'),
+(36, 'ANNEX 1 AND 2', '10', 'download (1).jpg', 'Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 and 2 Annex 1 an', 0, '2023-09-19 06:25:14', '2023-09-19 06:25:14'),
+(37, 'ANNEX MINI', '10', 'livingroom.jpg', 'Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex Mini Annex', 0, '2023-09-19 06:25:43', '2023-09-19 06:25:43'),
+(38, 'CEBU 1', '10', 'openroom.png', 'Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Cebu 1 Ceb', 0, '2023-09-19 06:26:30', '2023-09-19 06:26:30'),
+(39, 'CEBU 2', '10', 'trainingroom.png', 'Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Cebu 2 Ceb', 0, '2023-09-19 06:27:10', '2023-09-19 06:27:10'),
+(40, 'CEBU 3', '10', 'workshop.png', 'Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Cebu 3 Ceb', 0, '2023-09-19 06:27:31', '2023-09-19 06:27:31'),
+(41, 'MANILA', '10', 'classroom.png', 'Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila R', 0, '2023-09-19 06:28:07', '2023-09-19 06:28:07'),
+(42, 'LUZON', '10', 'download.jpg', 'Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Lu', 0, '2023-09-19 06:28:30', '2023-09-19 06:28:30'),
+(43, 'VISAYAS', '10', 'pcn.png', 'Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visa', 0, '2023-09-19 06:28:55', '2023-09-19 06:28:55'),
+(44, 'MINDANAO', '10', 'livingroom.jpg', 'Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Minda', 0, '2023-09-19 06:29:19', '2023-09-19 06:29:19'),
+(48, 'ROOM KO', '8', 'tryroom.jpg', '123131321321321', 0, '2023-09-20 05:43:35', '2023-09-20 05:45:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `id_number` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `middlename` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `contactNumber` varchar(15) NOT NULL,
+  `division` varchar(255) NOT NULL,
+  `category` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `id_number`, `username`, `password`, `firstname`, `middlename`, `lastname`, `contactNumber`, `division`, `category`, `status`, `timestamp`) VALUES
+(1, 123456789, 'jpgomera19', '$2y$10$lCzqmn/j8avfUXyR1oBg3..al4U7a/SWB/8JFu.JT8XG3Jlcknyky', 'JAMES PHILIP', 'AMANTE', 'GOMERA', '09101465183', 'STRAT', 'USER', 1, '2023-09-19 00:41:47'),
+(2, 987654321, 'deo123', '$2y$10$NN8BCdSQxem40Lk6ymY0l.j2sc0sNiQqoi5gQl5J3cBvnx..E6sJG', 'Deo', 'Middle', 'Villavicencio', '09123456789', 'STRAT', 'ADMIN', 0, '2023-09-19 00:42:43'),
+(3, 11223344, 'johndoe123', '$2y$10$QMwcGyEsYwCPkpAKjdw8oedZnpSb24/FA9NiVsc.hPhSUQ4guOTSu', 'John', 'Middle', 'Doe', '09123456789', 'HR', 'USER', 0, '2023-09-19 01:54:20'),
+(4, 1232132123, 'mary123', '$2y$10$8AOn7WgBH5W.tN5npnCb8.Tha/2giwZdjXMHXvcdt52pwM8GHtYhy', 'Mary', 'Middle', 'Smith', '09123456789', 'FINANCE', 'USER', 2, '2023-09-19 02:05:28');
 
 --
 -- Indexes for dumped tables
@@ -146,7 +192,8 @@ INSERT INTO `rooms` (`id`, `rooms`, `capacity`, `timestamp`) VALUES
 ALTER TABLE `events`
   ADD PRIMARY KEY (`evt_id`),
   ADD KEY `evt_start` (`evt_start`),
-  ADD KEY `evt_end` (`evt_end`);
+  ADD KEY `evt_end` (`evt_end`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `locationpo`
@@ -162,6 +209,12 @@ ALTER TABLE `rooms`
   ADD UNIQUE KEY `id` (`id`);
 
 --
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -169,7 +222,7 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `evt_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `evt_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `locationpo`
@@ -181,7 +234,23 @@ ALTER TABLE `locationpo`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `events`
+--
+ALTER TABLE `events`
+  ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

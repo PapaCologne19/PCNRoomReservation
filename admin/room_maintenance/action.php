@@ -1,6 +1,6 @@
 <?php
 
-include '../connect.php';
+include '../../room/connect.php';
 session_start();
 
 if (isset($_POST['addRoom'])) {
@@ -35,7 +35,7 @@ if (isset($_POST['addRoom'])) {
 
           if ($result) {
             $_SESSION['success'] = "Successfully Added";
-            header('Location: index.php');
+            header('Location: ../admin.php');
           } else {
             echo "Error";
           }
@@ -62,7 +62,7 @@ if (isset($_POST['delete_button_click'])) {
   $result = $connect->query($query);
 
   $_SESSION['success'] = "Successfully Deleted";
-  header('Location: index.php');
+  header('Location: ../admin.php');
 }
 
 // Updating Rooms
@@ -77,7 +77,7 @@ if (isset($_POST['updateRoom'])) {
 
   if ($updateResults) {
     $_SESSION['success'] = "Successfully Updated";
-    header('Location: index.php');
+    header('Location: ../admin.php');
   }
 }
 
@@ -113,7 +113,7 @@ if (isset($_POST['updateImageButton'])) {
 
           if ($result) {
             $_SESSION['success'] = "Successfully Updated";
-            header('Location: index.php');
+            header('Location: ../admin.php');
           } else {
             echo "Error";
           }
