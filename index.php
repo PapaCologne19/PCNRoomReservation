@@ -24,11 +24,11 @@ if (isset($_POST['login-submit'])) {
 
             if ($row["status"] === "1" && $row["category"] === "USER") {
                 header("Location: room/index.php");
-            } elseif($row['status'] === "0" && $row["category"] === "ADMIN"){
+            } elseif ($row['status'] === "0" && $row["category"] === "ADMIN") {
                 header("Location: room/index.php");
-            } elseif($row["status"] === "2" && $row["category"] === "USER"){
+            } elseif ($row["status"] === "2" && $row["category"] === "USER") {
                 $_SESSION["error"] =  "Your account has been rejected. Contact Mr. Deo or Mr. Mike for more info. Thank you.";
-            } else{
+            } else {
                 $_SESSION["warning"] =  "Please contact Mr. Deo or Mr. Mike for account approval. Thank you";
             }
         } else {
@@ -37,6 +37,29 @@ if (isset($_POST['login-submit'])) {
     } else {
         $_SESSION["error"] = "Hacker ka 'no? Huwag kami!🤬";
         echo "<script>$('#myModalroom').modal('show');</script>";
+    }
+}
+
+
+if (isset($_POST['register'])) {
+    $id_number = mysqli_real_escape_string($connect, $_POST['idnumber']);
+    $username = mysqli_real_escape_string($connect, $_POST['username']);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $firstname = mysqli_real_escape_string($connect, $_POST['firstName']);
+    $middlename = mysqli_real_escape_string($connect, $_POST['middleName']);
+    $lastname = mysqli_real_escape_string($connect, $_POST['lastName']);
+    $contact_number = mysqli_real_escape_string($connect, $_POST['contactNumber']);
+    $division = $_POST['division'];
+    $category = "USER";
+
+    $query2 = "INSERT INTO user(id_number, username, password, firstname, middlename, lastname, contactNumber, division, category) 
+    VALUES('$id_number', '$username', '$password', '$firstname', '$middlename', '$lastname', '$contact_number', '$division', '$category')";
+    $result2 = $connect->query($query2);
+
+    if ($result2) {
+        $_SESSION["success"] = "Successfully Created an Account";
+    } else {
+        $_SESSION['error'] = "Error";
     }
 }
 
@@ -67,39 +90,39 @@ if (isset($_POST['login-submit'])) {
 </head>
 
 <body>
-        <?php
-        if (isset($_SESSION['success'])) { ?>
-            <script>
-                Swal.fire({
-                    icon: 'success',
-                    title: "<?php echo $_SESSION['success']; ?>",
-                })
-            </script>
-        <?php unset($_SESSION['success']);
-        } 
-        ?>
-         <?php
-        if (isset($_SESSION['error'])) { ?>
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: "<?php echo $_SESSION['error']; ?>",
-                })
-            </script>
-        <?php unset($_SESSION['error']);
-        } 
-        ?>
-        <?php
-        if (isset($_SESSION['warning'])) { ?>
-            <script>
-                Swal.fire({
-                    icon: 'warning',
-                    title: "<?php echo $_SESSION['warning']; ?>",
-                })
-            </script>
-        <?php unset($_SESSION['warning']);
-        } 
-        ?>
+    <?php
+    if (isset($_SESSION['success'])) { ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: "<?php echo $_SESSION['success']; ?>",
+            })
+        </script>
+    <?php unset($_SESSION['success']);
+    }
+    ?>
+    <?php
+    if (isset($_SESSION['error'])) { ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: "<?php echo $_SESSION['error']; ?>",
+            })
+        </script>
+    <?php unset($_SESSION['error']);
+    }
+    ?>
+    <?php
+    if (isset($_SESSION['warning'])) { ?>
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: "<?php echo $_SESSION['warning']; ?>",
+            })
+        </script>
+    <?php unset($_SESSION['warning']);
+    }
+    ?>
     <center>
         <div class="container">
             <div class="row justify-content-center">
@@ -128,7 +151,7 @@ if (isset($_POST['login-submit'])) {
                                             <button type="submit" name="login-submit" id="login-submit" tabindex="3" class="form-control btn btn-login" value="LOGIN"><i class="fas fa-sign-in-alt"></i> Login</button>
                                         </div>
                                         <div class="col-md-6 pt-3">
-                                            <a href="register.php" style="color: #BABABA; ">Register Account here</a>
+                                            <a href="javascript:void(0)" class="registerAccount" style="color: #BABABA; ">Register Account here</a>
                                         </div>
                                 </div>
                                 </form>
@@ -140,10 +163,92 @@ if (isset($_POST['login-submit'])) {
         </div>
     </center>
 
-    <!-- Modal -->
-    <!-- Modal -->
+    <!-- Modal For Registration -->
+    <div class="modal fade" id="registerAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="room/images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px" onclick="playAudio();$('#myModal1').modal('show');" data-dismiss="modal">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" class="row g-3 needs-validation" enctype="multipart/form-data" accept="image/png, image/jpeg, image/jpg">
+                        <div class="mb-3">
+                            <label for="" class="form-label">ID Number</label>
+                            <input type="number" class="form-control" name="idnumber" id="idnumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">First Name</label>
+                            <input type="text" class="form-control" name="firstName" id="firstName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Middle Name</label>
+                            <input type="text" class="form-control" name="middleName" id="middleName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" name="lastName" id="lastName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Contact Number</label>
+                            <input type="number" class="form-control" name="contactNumber" id="contactNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Division</label>
+                            <select name="division" class="form-select" id="division" required>
+                                <option value="" disabled selected>Select Division Name</option>
+                                <option value="BD1-BU1_CORE">BD1-BU1_CORE</option>
+                                <option value="BD1-BU2_SELECTA">BD1-BU2_SELECTA</option>
+                                <option value="BD1-BU3_BEST_CENTER">BD1-BU3_BEST_CENTER</option>
+                                <option value="BD1-BU3_SPECIAL_ACTIVATION">BD1-BU3_SPECIAL_ACTIVATION</option>
+                                <option value="BD2-BU1">BD2-BU1</option>
+                                <option value="BD3">BD3</option>
+                                <option value="BSG">BSG</option>
+                                <option value="BSG2">BSG2</option>
+                                <option value="HR">HR</option>
+                                <option value="FINANCE">FINANCE</option>
+                                <option value="PPI">PPI</option>
+                                <option value="STRAT">STRAT</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn button" name="register" id="register">Save changes</button>
+                </div>
+                </form>
+            </div>
+        </div>
 
 
 </body>
+<script>
+    // Account Registration
+    $(document).ready(function() {
+        $('.registerAccount').on('click', function() {
+            $('#registerAccount').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function() {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#job_id').val(data[0]);
+
+
+        });
+    });
+</script>
 
 </html>
