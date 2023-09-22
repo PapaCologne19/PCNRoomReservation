@@ -75,3 +75,58 @@ if (isset($_POST['submit'])) {
 </body>
 
 </html>
+
+
+
+
+
+<?php
+// Your Facebook Page Access Token
+$access_token = 'EAAEuWIkg1MABO5SKZB8EEZCFOBmfjAW2IcJ60KrJ8t3haaKPRPq15AQW4HarbEAhYLqYccQ9RWJC91tsI7oSgyjovwz6HetgwMwaoZC1AfUCBWODFw3ecqbiLnhXdVhJvfhQO0Kb65ioy49ah4qhqgqeXKR1IFcPjsZCZC27WtZARaetXhLI9nV4HcBmiZCXge2';
+
+// Recipient name
+$recipient_name = 'linneth.gomera.5';
+
+// Create the API request URL
+$url = "https://graph.facebook.com/v15.0/me/messages?access_token=$access_token";
+
+// Create the message data
+$data = [
+    'recipient' => ['name' => $recipient_name],
+    'messaging_type' => 'RESPONSE',
+    'message' => ['text' => 'Hello, Tanga!']
+];
+
+// Convert the data to JSON format
+$json_data = json_encode($data);
+
+// Initialize cURL session
+$ch = curl_init($url);
+
+// Set cURL options
+curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+// Execute the cURL request and store the response
+$response = curl_exec($ch);
+
+// Check for cURL errors
+if (curl_errno($ch)) {
+    echo 'cURL Error: ' . curl_error($ch);
+} else {
+    // Check the response for errors
+    $json_response = json_decode($response);
+    if ($json_response->error) {
+        echo 'Facebook Graph API Error: ' . $json_response->error->message;
+    } else {
+        // Success!
+        $recipient_id = $json_response->recipient_id;
+
+        // Do something with the recipient ID
+    }
+}
+
+// Close cURL session
+curl_close($ch);
